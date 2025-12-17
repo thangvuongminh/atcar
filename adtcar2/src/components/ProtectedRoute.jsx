@@ -6,7 +6,7 @@ import { useAuthStore } from "../store/auth.store";
 const ProtectedRoute = ({
     children,
     requireAuth = true,
-    requiredRoles = [], // ví dụ: ["ADMIN"], ["EDITOR"], ["USER"]
+    requiredRoles = [], 
 }) => {
     const location = useLocation();
 
