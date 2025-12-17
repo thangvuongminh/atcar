@@ -2,10 +2,10 @@ import axios from "axios";
 import { useAuthStore } from "../store/auth.store";
 
 const api = axios.create({
-    baseURL: "http://localhost:8080", // đổi cho đúng base URL backend
+    baseURL: "http://localhost:8080", 
 });
 
-// Gắn accessToken vào header
+
 api.interceptors.request.use((config) => {
     const { accessToken } = useAuthStore.getState();
     if (accessToken) {
@@ -14,7 +14,7 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
-// Tự refresh token khi 401
+
 let isRefreshing = false;
 let failedQueue = [];
 
@@ -44,7 +44,7 @@ api.interceptors.response.use(
             originalConfig._retry = true;
 
             if (isRefreshing) {
-                // đợi refresh xong rồi dùng token mới
+                
                 return new Promise((resolve, reject) => {
                     failedQueue.push({
                         resolve: (token) => {
