@@ -10,7 +10,7 @@ export const useAuthStore = create(
             refreshToken: null,
             loading: false,
 
-            // derived
+       
             isAuthenticated: () => !!get().user && !!get().accessToken,
 
             hasPermission: (perm) => get().permissions.includes(perm),
@@ -18,7 +18,7 @@ export const useAuthStore = create(
             hasAnyPermission: (perms = []) =>
                 perms.some((p) => get().permissions.includes(p)),
 
-            // set toàn bộ auth sau login / refresh
+           
             setAuth: ({ user, accessToken, refreshToken }) =>
                 set({
                     user,
