@@ -2,20 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useMediaStore } from "../store/media.store";
 import axiosClient from "../store/axiosClient";
 
-// --- COMPONENT CON: XỬ LÝ TỪNG DANH MỤC ---
 const CategorySection = ({ category }) => {
     const [fileNames, setFileNames] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
 
-    // State cho thông báo (Notification)
+   
     const [notify, setNotify] = useState({
         show: false,
         message: "",
         type: "",
     });
 
-    // Hàm hiển thị thông báo tự tắt sau 3s
     const showMessage = (msg, type = "success") => {
         setNotify({ show: true, message: msg, type });
         setTimeout(
@@ -24,7 +22,7 @@ const CategorySection = ({ category }) => {
         );
     };
 
-    // 1. API GET: Lấy danh sách file
+
     const fetchImages = async () => {
         setIsLoading(true);
         try {
@@ -45,7 +43,7 @@ const CategorySection = ({ category }) => {
         if (category.name) fetchImages();
     }, [category.name]);
 
-    // 2. API POST: Upload ảnh
+ 
     const handleUpload = async (event) => {
         const files = event.target.files;
         if (!files || files.length === 0) return;
@@ -73,9 +71,9 @@ const CategorySection = ({ category }) => {
         }
     };
 
-    // 3. API DELETE: Xóa ảnh (Dùng DELETE Mapping)
+  
     const handleDelete = async (fileName) => {
-        // Đã xóa window.confirm theo yêu cầu của bạn
+       
         try {
             await axiosClient.delete("/upload/delete/media", {
                 params: {
@@ -84,7 +82,7 @@ const CategorySection = ({ category }) => {
                 },
             });
 
-            // Cập nhật UI ngay lập tức
+        
             setFileNames((prev) => prev.filter((name) => name !== fileName));
             showMessage("Đã xóa ảnh.", "success");
         } catch (error) {
@@ -104,7 +102,7 @@ const CategorySection = ({ category }) => {
 
     return (
         <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 mb-6 relative transition-all hover:shadow-md">
-            {/* Header */}
+         
             <div className="flex items-center justify-between border-b pb-4 mb-4 border-gray-100">
                 <div className="flex flex-col gap-1">
                     <h2 className="text-xl font-bold text-gray-800 capitalize flex items-center gap-2">
@@ -124,7 +122,6 @@ const CategorySection = ({ category }) => {
                     </p>
                 </div>
 
-                {/* Khu vực hiển thị thông báo (Không dùng Alert) */}
                 {notify.show && (
                     <div
                         className={`px-4 py-2 rounded-lg text-sm font-medium animate-pulse ${
@@ -138,7 +135,6 @@ const CategorySection = ({ category }) => {
                 )}
             </div>
 
-            {/* Grid Ảnh */}
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-6">
                 {isLoading ? (
                     <div className="col-span-full text-center py-4 text-gray-400">
@@ -195,7 +191,7 @@ const CategorySection = ({ category }) => {
                 )}
             </div>
 
-            {/* Nút Upload */}
+          
             <div className="flex justify-start">
                 <label
                     className={`cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
@@ -239,7 +235,7 @@ const CategorySection = ({ category }) => {
     );
 };
 
-// --- COMPONENT CHÍNH ---
+
 export default function MediaManager() {
     const init = useMediaStore((s) => s.init);
     const [categories, setCategories] = useState([]);
