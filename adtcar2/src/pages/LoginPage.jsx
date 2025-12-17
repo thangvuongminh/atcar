@@ -1,10 +1,10 @@
-// src/pages/LoginPage.jsx
+
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/auth.store";
-import axiosClient from "../store/axiosClient"; // ✅ DÙNG axiosClient CÓ INTERCEPTOR
+import axiosClient from "../store/axiosClient"; 
 
-// Icons (Dùng SVG trực tiếp để không cần cài thêm thư viện)
+
 const MailIcon = () => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -96,13 +96,13 @@ const LoginPage = () => {
         setError("");
 
         try {
-            // ✅ DÙNG axiosClient (có baseURL + interceptor)
+            
             const res = await axiosClient.post("/login", {
                 email: formData.email,
                 password: formData.password,
             });
 
-            // Backend trả: { statusCode, message, data: { userResponse, accessToken, refreshToken } }
+            
             const { userResponse, accessToken, refreshToken } =
                 res.data?.data || {};
 
@@ -110,14 +110,14 @@ const LoginPage = () => {
                 throw new Error("Dữ liệu login không hợp lệ");
             }
 
-            // ✅ Lưu vào Zustand store
+          
             setAuth({
                 user: userResponse,
                 accessToken,
                 refreshToken,
             });
 
-            // ✅ Lưu vào localStorage để F5 không mất
+          
             localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("refreshToken", refreshToken);
 
