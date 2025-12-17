@@ -19,7 +19,7 @@ import {
 
 const TIME_SLOTS = ["08:00", "10:00", "12:00", "14:00", "16:00"];
 
-// ✅ đổi endpoint cho đúng backend của bạn
+
 const RETAIL_LIST_API = "/retail/all";
 const CREATE_BOOKING_API = "/user/booking";
 
@@ -35,7 +35,7 @@ const SchedulePage = () => {
   const [submitMessage, setSubmitMessage] = useState("");
   const [showLoginModal, setShowLoginModal] = useState(false);
 
-  // --- MIN/MAX ngày (hôm nay -> +30 ngày) ---
+
   const [dateConstraints, setDateConstraints] = useState({ min: "", max: "" });
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const SchedulePage = () => {
     });
   }, []);
 
-  // --- React Hook Form ---
+
   const {
     register,
     handleSubmit,
@@ -83,7 +83,7 @@ const SchedulePage = () => {
 
   const selectedTimeSlot = watch("timeSlot");
 
-  // autofill nếu login
+
   useEffect(() => {
     if (isAuthenticated && user) {
       setValue("customerName", user.name || "");
@@ -92,7 +92,7 @@ const SchedulePage = () => {
     }
   }, [isAuthenticated, user, setValue]);
 
-  // load retail list
+
   useEffect(() => {
     const fetchRetails = async () => {
       try {
@@ -102,7 +102,7 @@ const SchedulePage = () => {
         setRetails(list);
       } catch (err) {
         console.error("Load retail error:", err);
-        // fallback cứng
+      
         setRetails([
           { id: 1, name: "ADT Car Hà Nội", address: "Cầu Giấy, Hà Nội" },
           { id: 2, name: "ADT Car TP.HCM", address: "Quận 7, TP.HCM" },
@@ -123,7 +123,7 @@ const SchedulePage = () => {
       return;
     }
 
-    // validate date range (đề phòng user tự gõ)
+ 
     if (data.date < dateConstraints.min || data.date > dateConstraints.max) {
       setError("date", {
         type: "manual",
@@ -136,7 +136,7 @@ const SchedulePage = () => {
 
     setLoading(true);
 
-    // ✅ payload đúng BookingRequest backend
+  
     const payload = {
       note: data.note,
       timeBooking: data.date, // yyyy-MM-dd
@@ -157,7 +157,7 @@ const SchedulePage = () => {
           "Đặt lịch thành công! Chúng tôi sẽ liên hệ xác nhận sớm."
         );
 
-        // reset nhưng giữ thông tin user
+    
         reset({
           customerName: data.customerName,
           phone: data.phone,
@@ -191,7 +191,7 @@ const SchedulePage = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative">
-      {/* --- LOGIN MODAL --- */}
+ 
       {showLoginModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
@@ -235,10 +235,9 @@ const SchedulePage = () => {
         </div>
       )}
 
-      {/* --- MAIN FORM --- */}
       <div className="max-w-6xl w-full">
         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[600px]">
-          {/* BANNER */}
+  
           <div className="md:w-2/5 bg-gradient-to-br from-indigo-700 to-purple-800 p-10 text-white flex flex-col justify-between relative overflow-hidden">
             <div className="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 rounded-full bg-white/10 blur-2xl"></div>
             <div className="absolute bottom-0 left-0 -ml-10 -mb-10 w-40 h-40 rounded-full bg-white/10 blur-2xl"></div>
@@ -282,7 +281,7 @@ const SchedulePage = () => {
             </div>
           </div>
 
-          {/* FORM */}
+   
           <div className="md:w-3/5 p-10 lg:p-12 bg-white">
             {submitStatus === "success" && (
               <div className="mb-8 bg-green-50 border border-green-200 text-green-800 px-6 py-4 rounded-2xl flex items-center gap-3 shadow-sm">
@@ -316,7 +315,6 @@ const SchedulePage = () => {
                 <span className="h-1 flex-1 bg-gray-100 ml-4 rounded-full"></span>
               </h3>
 
-              {/* HỌ TÊN & SĐT */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="group">
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -372,7 +370,7 @@ const SchedulePage = () => {
                 </div>
               </div>
 
-              {/* EMAIL (optional UI only) */}
+       
               <div className="group">
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Email (Tùy chọn)
@@ -391,7 +389,7 @@ const SchedulePage = () => {
                 </div>
               </div>
 
-              {/* NGÀY HẸN */}
+      
               <div className="group">
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Ngày hẹn <span className="text-red-500">*</span>
@@ -418,7 +416,7 @@ const SchedulePage = () => {
                 )}
               </div>
 
-              {/* GIỜ HẸN */}
+         
               <div className="group">
                 <label className="block text-sm font-semibold text-gray-700 mb-3">
                   Giờ hẹn (Khung giờ trống){" "}
@@ -463,7 +461,7 @@ const SchedulePage = () => {
                 )}
               </div>
 
-              {/* CHI NHÁNH & DÒNG XE */}
+      
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="group">
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -515,7 +513,7 @@ const SchedulePage = () => {
                 </div>
               </div>
 
-              {/* GHI CHÚ */}
+       
               <div className="group">
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Ghi chú / Yêu cầu đặc biệt
