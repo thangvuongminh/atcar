@@ -11,7 +11,7 @@ export default function ChatWidget() {
   const sendMsg = useChatStore((s) => s.send);
 
   const [input, setInput] = useState("");
-  const [sending, setSending] = useState(false); // giữ UI demo
+  const [sending, setSending] = useState(false); 
   const listRef = useRef(null);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function ChatWidget() {
     setSending(true);
     sendMsg(trimmed);
     setInput("");
-    setTimeout(() => setSending(false), 350); // đồng bộ với demo bot delay
+    setTimeout(() => setSending(false), 350); 
   };
 
   const quick = (txt) => send(txt);
