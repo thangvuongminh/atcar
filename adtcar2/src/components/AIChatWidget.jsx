@@ -1,10 +1,10 @@
-// src/components/AIChatWidget.jsx
+
 import React, { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send, Bot, LogIn } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axiosClient from "../store/axiosClient";
 
-// Tin nhắn mặc định
+
 const INITIAL_MESSAGES = [
     {
         id: 1,
@@ -24,14 +24,14 @@ const AIChatWidget = ({ isLoggedIn, roleName }) => {
 
     const isUser = roleName === "USER";
 
-    // Auto scroll khi có tin mới
+    
     useEffect(() => {
         if (isOpen && isLoggedIn) {
             messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
         }
     }, [messages, isOpen, isLoggedIn]);
 
-    // ❗ Khi logout: đóng chat + reset toàn bộ state về ban đầu
+    
     useEffect(() => {
         if (!isLoggedIn) {
             setIsOpen(false);
@@ -60,12 +60,12 @@ const AIChatWidget = ({ isLoggedIn, roleName }) => {
         try {
             let res;
             if (isUser) {
-                // USER -> /user/chat
+                
                 res = await axiosClient.get("/user/chat", {
                     params: { message: userText },
                 });
             } else {
-                // ADMIN / MANAGER / EDITOR / ... -> /super/user/chat
+                
                 res = await axiosClient.get("/super/user/chat", {
                     params: { message: userText },
                 });
@@ -75,7 +75,7 @@ const AIChatWidget = ({ isLoggedIn, roleName }) => {
             let reply = "Dạ, hiện em chưa có thông tin phù hợp ạ.";
 
             if (isUser) {
-                // /user/chat: data là mảng {title, description[]}
+               
                 if (Array.isArray(data) && data.length > 0) {
                     reply = data
                         .map((item) => {
@@ -98,7 +98,7 @@ const AIChatWidget = ({ isLoggedIn, roleName }) => {
                         .join("\n\n");
                 }
             } else {
-                // /super/user/chat: tuỳ backend, mình xử lý mềm
+                
                 if (typeof data === "string") {
                     reply = data;
                 } else if (Array.isArray(data)) {
@@ -129,10 +129,10 @@ const AIChatWidget = ({ isLoggedIn, roleName }) => {
 
     return (
         <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end">
-            {/* KHUNG CHAT */}
+            
             {isOpen && (
                 <div className="mb-4 w-[350px] h-[450px] bg-white border border-gray-200 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fade-in-up">
-                    {/* Header */}
+                 
                     <div className="bg-indigo-600 p-4 flex justify-between items-center text-white">
                         <div className="flex items-center gap-2">
                             <Bot size={24} />
@@ -146,9 +146,9 @@ const AIChatWidget = ({ isLoggedIn, roleName }) => {
                         </button>
                     </div>
 
-                    {/* Nội dung */}
+                   
                     {!isLoggedIn ? (
-                        // Chưa login -> yêu cầu đăng nhập
+                        
                         <div className="flex-1 flex flex-col items-center justify-center p-6 text-center bg-white">
                             <Bot size={60} className="text-gray-300 mb-3" />
                             <h3 className="text-lg font-bold text-gray-800 mb-2">
@@ -198,7 +198,7 @@ const AIChatWidget = ({ isLoggedIn, roleName }) => {
                                 <div ref={messagesEndRef} />
                             </div>
 
-                            {/* Input */}
+                            
                             <div className="p-3 bg-white border-t flex gap-2">
                                 <input
                                     type="text"
@@ -226,7 +226,7 @@ const AIChatWidget = ({ isLoggedIn, roleName }) => {
                 </div>
             )}
 
-            {/* NÚT BONG BÓNG */}
+            
             <button
                 onClick={handleToggleChat}
                 className="transition-all duration-300 bg-indigo-600 hover:bg-indigo-700 text-white p-4 rounded-full shadow-xl"
