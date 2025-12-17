@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
-// Đã thêm 'Image' vào danh sách import icon
+
 import { LayoutDashboard, FileText, Layers, LogOut, Image } from "lucide-react";
 import { useEditorLayoutStore } from "../../store/editor.layout.store";
 import { useAuthStore } from "../../store/auth.store";
@@ -9,7 +9,7 @@ const EditorLayout = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // giữ sidebarOpen để tương lai làm responsive (như file cũ)
+  
     const sidebarOpen = useEditorLayoutStore((s) => s.sidebarOpen);
     const setSidebarOpen = useEditorLayoutStore((s) => s.setSidebarOpen);
 
@@ -26,19 +26,19 @@ const EditorLayout = () => {
         { name: "Dashboard", path: "/editor/dashboard", icon: LayoutDashboard },
         { name: "Bài viết", path: "/editor/posts", icon: FileText },
 
-        // --- MỚI THÊM: Kho tài sản ---
+
         { name: "Kho tài sản", path: "/editor/media", icon: Image },
     ];
 
     return (
         <div className="flex min-h-screen bg-gray-100">
-            {/* Sidebar */}
+        
             <aside className="w-64 bg-white shadow-md p-4">
                 <h2 className="text-xl font-bold text-blue-600 mb-6">
                     Biên tập viên
                 </h2>
 
-                {/* giữ state để sau làm mobile; hiện tại không đổi UI */}
+          
                 <button
                     onClick={() => setSidebarOpen(!sidebarOpen)}
                     className="hidden"
@@ -71,7 +71,7 @@ const EditorLayout = () => {
                 </nav>
             </aside>
 
-            {/* Main */}
+     
             <main className="flex-1 p-6 overflow-y-auto">
                 <Outlet />
             </main>
