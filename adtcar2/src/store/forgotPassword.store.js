@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export const useForgotPasswordStore = create((set, get) => ({
-  step: 1, // 1: request otp, 2: reset
+  step: 1, 
   loading: false,
   form1: { email: "" },
   form2: { email: "", otp: "", newPassword: "", confirmPassword: "" },
@@ -21,8 +21,7 @@ export const useForgotPasswordStore = create((set, get) => ({
 
     set({ loading: true });
     try {
-      // ✅ TODO API: Gửi OTP về email
-      // await fetch("YOUR_API/auth/forgot-password", { method:"POST", body: JSON.stringify({ email }) });
+      
 
       set((s) => ({ form2: { ...s.form2, email }, step: 2 }));
       alert("✅ (Demo) Đã gửi mã OTP về email. Hãy nhập OTP để đặt lại mật khẩu.");
@@ -48,11 +47,7 @@ export const useForgotPasswordStore = create((set, get) => ({
 
     set({ loading: true });
     try {
-      // ✅ TODO API: Xác nhận OTP + đổi mật khẩu
-      // await fetch("YOUR_API/auth/reset-password", {
-      //   method:"POST",
-      //   body: JSON.stringify({ email, otp, newPassword })
-      // });
+      
 
       alert("✅ (Demo) Đặt lại mật khẩu thành công. Bạn có thể đăng nhập lại.");
     } catch (err) {
