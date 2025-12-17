@@ -27,7 +27,7 @@ import {
 const HomePage = () => {
   return (
     <div className="min-h-screen bg-[#020203] text-white font-sans selection:bg-indigo-500">
-      {/* ================= HERO SECTION ================= */}
+      
       <section className="relative h-[85vh] w-full flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
@@ -88,7 +88,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* ================= SECTION 2: GIÁ TRỊ CỐT LÕI ================= */}
+    
       <section className="py-24 bg-[#0a0b10] relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/3 h-full bg-indigo-600/5 blur-[100px] rounded-full pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-1/4 h-full bg-orange-500/5 blur-[100px] rounded-full pointer-events-none"></div>
@@ -161,7 +161,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* ================= SECTION 3: THƯ VIỆN KIỆT TÁC (GALLERY) ================= */}
       <section className="py-24 bg-[#020203]">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <div className="flex justify-between items-end mb-12">
@@ -225,7 +224,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* ================= SECTION 4: QUY TRÌNH LÀM VIỆC ================= */}
+
       <section className="py-20 bg-[#0f111a] border-y border-white/5">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <h2 className="text-3xl font-bold text-center mb-16">
@@ -282,7 +281,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* ================= [MỚI THÊM] SECTION 5: FLASH OFFER / CTA ================= */}
+  
       <section className="relative py-24 overflow-hidden">
         {/* Background Image Overlay */}
         <div className="absolute inset-0">
