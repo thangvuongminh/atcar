@@ -1,4 +1,4 @@
-// src/pages/ProfilePage.jsx
+
 import React, { useState, useEffect } from "react";
 import axiosClient from "../store/axiosClient";
 import { User, Phone, MapPin, Mail, Shield, Save, X } from "lucide-react"; // Nếu chưa có lucide-react thì cài: npm i lucide-react
@@ -14,7 +14,7 @@ const ProfilePage = () => {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
-    // ==================== LOAD PROFILE ====================
+
     useEffect(() => {
         const fetchProfile = async () => {
             try {
@@ -44,7 +44,7 @@ const ProfilePage = () => {
         fetchProfile();
     }, []);
 
-    // ==================== VALIDATION ====================
+
     const validate = (values) => {
         const newErrors = {};
         if (!values.fullName || !values.fullName.trim()) {
@@ -58,14 +58,14 @@ const ProfilePage = () => {
         return newErrors;
     };
 
-    // ==================== HANDLE CHANGE ====================
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm((prev) => ({ ...prev, [name]: value }));
         setErrors((prev) => ({ ...prev, [name]: undefined }));
     };
 
-    // ==================== SUBMIT ====================
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!form) return;
@@ -81,7 +81,7 @@ const ProfilePage = () => {
         setSuccess("");
 
         try {
-            // Payload chỉ gửi những thứ user được sửa
+     
             const payload = {
                 name: form.fullName,
                 phone: form.phone,
@@ -92,7 +92,7 @@ const ProfilePage = () => {
             const data = res.data?.data || {};
 
             const updatedUser = {
-                ...user, // Giữ lại email, role cũ
+                ...user,
                 fullName: data.name || form.fullName,
                 phone: data.phone || form.phone,
                 address: data.address || form.address,
@@ -109,7 +109,7 @@ const ProfilePage = () => {
         }
     };
 
-    // ==================== UI HELPERS ====================
+
     if (isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -120,7 +120,7 @@ const ProfilePage = () => {
 
     if (!user || !form) return null;
 
-    // Avatar generation (nếu ko có ảnh thật)
+ 
     const displayAvatar =
         user.avatarUrl ||
         `https://ui-avatars.com/api/?name=${encodeURIComponent(
@@ -136,7 +136,7 @@ const ProfilePage = () => {
 
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative z-10">
                 <div className="flex flex-col md:flex-row gap-6">
-                    {/* LEFT COLUMN: Avatar & Quick Info */}
+               
                     <div className="md:w-1/3 flex flex-col gap-6">
                         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col items-center text-center">
                             {/* Avatar */}
@@ -186,7 +186,6 @@ const ProfilePage = () => {
                         </div>
                     </div>
 
-                    {/* RIGHT COLUMN: Edit Form */}
                     <div className="md:w-2/3">
                         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                             <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
@@ -198,7 +197,7 @@ const ProfilePage = () => {
                                         Cập nhật thông tin liên hệ của bạn
                                     </p>
                                 </div>
-                                {/* Nút Hủy thay đổi (Reset form) */}
+                                
                                 {JSON.stringify(form) !==
                                     JSON.stringify(user) && (
                                     <button
@@ -235,9 +234,9 @@ const ProfilePage = () => {
                                     onSubmit={handleSubmit}
                                     className="space-y-6"
                                 >
-                                    {/* Grid Layout */}
+                               
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        {/* Full Name */}
+                                   
                                         <div className="space-y-2">
                                             <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                                                 <User
@@ -294,7 +293,7 @@ const ProfilePage = () => {
                                         </div>
                                     </div>
 
-                                    {/* Address (Full Width) */}
+                              
                                     <div className="space-y-2">
                                         <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                                             <MapPin
@@ -313,7 +312,7 @@ const ProfilePage = () => {
                                         ></textarea>
                                     </div>
 
-                                    {/* Actions */}
+                               
                                     <div className="pt-4 flex items-center justify-end gap-3 border-t border-gray-100">
                                         <button
                                             type="submit"
