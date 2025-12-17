@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import axiosClient from "../../store/axiosClient";
 
-// --- GIỮ NGUYÊN COMPONENT MODAL & TOAST & CARD ---
+
 const ConfirmDeleteModal = ({ postId, onConfirm, onCancel }) => {
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[10000]">
@@ -72,10 +72,10 @@ const BigStatCard = ({ title, value, icon: Icon, colorTheme, loading }) => {
 export default function EditorDashboard() {
     const navigate = useNavigate();
     
-    // State lưu TOÀN BỘ bài viết lấy từ API /get/post
+    
     const [allPosts, setAllPosts] = useState([]); 
     
-    // State lưu bài viết đang hiển thị (sau khi lọc & phân trang client)
+   
     const [displayedPosts, setDisplayedPosts] = useState([]);
     
     const [loading, setLoading] = useState(true);
@@ -87,28 +87,28 @@ export default function EditorDashboard() {
     const [filters, setFilters] = useState({ keyword: "", categoryName: "", postStatus: "", page: 0, size: 5 });
     const [totalPages, setTotalPages] = useState(0);
 
-    // Thống kê
+    
     const [stats, setStats] = useState({ pending: 0, published: 0, deny: 0, draft: 0, archived: 0 });
 
-    // --- 1. GỌI API DUY NHẤT: /get/post (VÌ NÓ CÓ DỮ LIỆU) ---
+  
     const fetchAllData = async () => {
         setLoading(true);
         try {
-            // Lấy danh mục
+          
             axiosClient.get("/category/all").then(res => res.data?.data && setCategories(res.data.data)).catch(console.error);
 
-            // Lấy bài viết từ /get/post
+         
             console.log("Gọi API /get/post...");
             const res = await axiosClient.get("/get/post");
             const data = res.data?.data || [];
             
-            // Xử lý an toàn nếu data trả về không phải mảng
+          
             const safeData = Array.isArray(data) ? data : [];
             
             console.log("Dữ liệu nhận được:", safeData);
-            setAllPosts(safeData); // Lưu gốc
+            setAllPosts(safeData); 
 
-            // Tính thống kê luôn từ dữ liệu này
+          
             setStats({
                 pending: safeData.filter((p) => p.postStatus === "PENDING_REVIEW").length,
                 published: safeData.filter((p) => p.postStatus === "PUBLISHED").length,
@@ -129,39 +129,39 @@ export default function EditorDashboard() {
         fetchAllData();
     }, []);
 
-    // --- 2. XỬ LÝ LỌC & PHÂN TRANG PHÍA CLIENT (useEffect) ---
+  
     useEffect(() => {
         let result = [...allPosts];
 
-        // Lọc theo keyword (Title)
+      
         if (filters.keyword) {
             result = result.filter(p => p.title?.toLowerCase().includes(filters.keyword.toLowerCase()));
         }
 
-        // Lọc theo Category
+  
         if (filters.categoryName) {
             result = result.filter(p => p.categoryName === filters.categoryName);
         }
 
-        // Lọc theo Status
+      
         if (filters.postStatus) {
             result = result.filter(p => p.postStatus === filters.postStatus);
         }
 
-        // Tính toán phân trang
+ 
         const total = result.length;
         setTotalPages(Math.ceil(total / filters.size));
 
-        // Cắt mảng (Slice)
+        
         const start = filters.page * filters.size;
         const end = start + filters.size;
         setDisplayedPosts(result.slice(start, end));
 
-    }, [allPosts, filters]); // Chạy lại khi data gốc đổi hoặc filter đổi
+    }, [allPosts, filters]); 
 
-    // --- HANDLERS ---
+   
     const handleFilterChange = (key, value) => {
-        setFilters((prev) => ({ ...prev, [key]: value, page: 0 })); // Reset về trang 0 khi lọc
+        setFilters((prev) => ({ ...prev, [key]: value, page: 0 })); 
     };
 
     const handlePageChange = (newPage) => {
@@ -189,7 +189,6 @@ export default function EditorDashboard() {
     const handleEditPost = (postId, e) => { e.stopPropagation(); navigate(`/editor/posts/edit/${postId}`); };
     const handleRowClick = (postId) => { if (!isConfirmationOpen) navigate(`/editor/posts/edit/${postId}`); };
 
-    // Badge render
     const renderStatusBadge = (status) => {
         const styles = {
             PUBLISHED: { bg: "bg-green-100", text: "text-green-700", label: "Đã Xuất Bản", border: "border-green-200" },
@@ -208,7 +207,7 @@ export default function EditorDashboard() {
             {isConfirmationOpen && <ConfirmDeleteModal postId={isConfirmationOpen} onConfirm={confirmDeletion} onCancel={() => setIsConfirmationOpen(null)} />}
 
             <div className="max-w-[1600px] mx-auto space-y-8">
-                {/* Header */}
+              
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-gray-200">
                     <div>
                         <h1 className="text-4xl font-black text-gray-800 flex items-center gap-3">
@@ -222,7 +221,7 @@ export default function EditorDashboard() {
                     </button>
                 </div>
 
-                {/* Stats Cards */}
+             
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                     <BigStatCard title="Bản Nháp" value={stats.draft} icon={FileText} loading={loading} colorTheme={{ bg: "bg-blue-50", text: "text-blue-600" }} />
                     <BigStatCard title="Chờ Duyệt" value={stats.pending} icon={Clock} loading={loading} colorTheme={{ bg: "bg-yellow-100", text: "text-yellow-600" }} />
@@ -231,9 +230,9 @@ export default function EditorDashboard() {
                     <BigStatCard title="Lưu Trữ" value={stats.archived} icon={Archive} loading={loading} colorTheme={{ bg: "bg-gray-100", text: "text-gray-600" }} />
                 </div>
 
-                {/* Table */}
+             
                 <div className="bg-white rounded-[2rem] shadow-xl border border-gray-100 overflow-hidden">
-                    {/* Toolbar */}
+                   
                     <div className="p-6 border-b border-gray-100 bg-gray-50/50 flex flex-col xl:flex-row gap-4 items-center justify-between">
                         <div className="flex items-center gap-4 w-full xl:w-auto">
                             <div className="p-3 bg-indigo-50 text-indigo-600 rounded-xl"><FileText size={28} /></div>
@@ -283,7 +282,7 @@ export default function EditorDashboard() {
                                 </thead>
                                 <tbody className="divide-y divide-gray-100 text-gray-700">
                                     {displayedPosts.map((p) => {
-                                        // Chỉ cho phép xóa khi PENDING_REVIEW
+                                    
                                         const canDelete = p.postStatus === "PENDING_REVIEW";
                                         return (
                                         <tr key={p.id} onClick={() => handleRowClick(p.id)} className="group hover:bg-blue-50/50 transition-colors duration-200 cursor-pointer">
