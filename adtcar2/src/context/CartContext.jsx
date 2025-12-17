@@ -17,7 +17,7 @@ export const CartProvider = ({ children }) => {
   const getTotalItems = useCartStore((s) => s.getTotalItems);
   const getItemQuantity = useCartStore((s) => s.getItemQuantity);
 
-  // Tương thích API cũ (nếu CartPage đang dùng)
+
   const removeFromCart = (productId) => {
     useCartStore.setState((state) => ({
       items: state.items.filter((x) => getId(x.product) !== productId),
@@ -40,7 +40,7 @@ export const CartProvider = ({ children }) => {
   const getTotalPrice = () =>
     items.reduce((sum, x) => sum + (x.product?.price || 0) * (x.qty || 0), 0);
 
-  // normalize ra {product, quantity} đúng kiểu Context cũ hay dùng
+ 
   const normalizedItems = useMemo(
     () =>
       items.map((x) => ({
