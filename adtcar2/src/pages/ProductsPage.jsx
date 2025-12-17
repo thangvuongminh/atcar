@@ -1,16 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useProductsStore } from "../store/products.store";
 
-// --- QUAN TRỌNG: Import component ProductCard ---
-// (Nếu file ProductCard nằm trong thư mục components thì sửa thành "../components/ProductCard")
 import ProductCard from "../components/ProductCard"; 
 
 const PAGE_SIZE = 6;
 const STATUS_FIELD = "productStatus";
 
-// ==========================================
-// HOOK DEBOUNCE (Giữ nguyên)
-// ==========================================
+
 function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
     useEffect(() => {
@@ -22,9 +18,7 @@ function useDebounce(value, delay) {
     return debouncedValue;
 }
 
-// ==========================================
-// COMPONENT PHÂN TRANG (Giữ nguyên)
-// ==========================================
+
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     const handlePageChange = (page) => {
         if (page < 1 || page > totalPages) return;
@@ -89,9 +83,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     );
 };
 
-// ==========================================
-// COMPONENT CHÍNH
-// ==========================================
+
 const ProductsPage = () => {
     const products = useProductsStore((s) => s.products);
     const loading = useProductsStore((s) => s.loading);
@@ -100,7 +92,7 @@ const ProductsPage = () => {
     const setCurrentPage = useProductsStore((s) => s.setCurrentPage);
     const fetchProducts = useProductsStore((s) => s.fetchProducts);
 
-    // Filter state
+  
     const [filters, setFilters] = useState({
         name: "",
         brand: "",
@@ -114,7 +106,7 @@ const ProductsPage = () => {
     const [sortOrder, setSortOrder] = useState("desc");
     const debouncedFilters = useDebounce(filters, 400);
 
-    // Build Params
+ 
     const apiParams = useMemo(() => {
         const sortField = sortBy || "sold";
         const sortParam = sortOrder === "desc" ? `-${sortField}` : sortField;
@@ -136,7 +128,7 @@ const ProductsPage = () => {
 
     useEffect(() => {
         fetchProducts(apiParams);
-    }, [apiParams]); // eslint-disable-line
+    }, [apiParams]); 
 
     const onFilterChange = (field, value) => {
         setFilters((prev) => ({ ...prev, [field]: value }));
@@ -161,12 +153,12 @@ const ProductsPage = () => {
         <div className="min-h-screen bg-gray-50 text-gray-800">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="flex flex-col lg:flex-row gap-8">
-                    {/* --- SIDEBAR --- */}
+                   
                     <div className="lg:w-1/4">
                         <div className="bg-white rounded-lg shadow-sm p-6 sticky top-24 border border-gray-200">
                             <h3 className="text-lg font-bold text-gray-900 mb-4 border-b pb-2">Bộ lọc</h3>
 
-                            {/* Tên sản phẩm */}
+                           
                             <div className="mb-4">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Tên sản phẩm</label>
                                 <input
@@ -178,7 +170,6 @@ const ProductsPage = () => {
                                 />
                             </div>
 
-                            {/* Thương hiệu */}
                             <div className="mb-4">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Thương hiệu</label>
                                 <input
@@ -190,7 +181,6 @@ const ProductsPage = () => {
                                 />
                             </div>
 
-                            {/* Xuất xứ */}
                             <div className="mb-4">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Xuất xứ</label>
                                 <input
@@ -202,7 +192,6 @@ const ProductsPage = () => {
                                 />
                             </div>
 
-                            {/* Trạng thái */}
                             <div className="mb-4">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Trạng thái</label>
                                 <select
@@ -217,7 +206,7 @@ const ProductsPage = () => {
                                 </select>
                             </div>
 
-                            {/* Khoảng giá */}
+         
                             <div className="mb-4">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Khoảng giá</label>
                                 <div className="flex gap-2">
@@ -238,7 +227,7 @@ const ProductsPage = () => {
                                 </div>
                             </div>
 
-                            {/* Sắp xếp */}
+          
                             <div className="mb-6">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Sắp xếp</label>
                                 <select
@@ -268,7 +257,7 @@ const ProductsPage = () => {
                         </div>
                     </div>
 
-                    {/* --- MAIN CONTENT --- */}
+   
                     <div className="lg:w-3/4 flex flex-col min-h-[85vh]">
                         <div className="flex justify-between items-center mb-6 bg-white p-4 rounded-lg shadow-sm border border-gray-200">
                             <h1 className="text-xl font-bold text-gray-800">Sản phẩm</h1>
@@ -277,7 +266,7 @@ const ProductsPage = () => {
                             </span>
                         </div>
 
-                        {/* GRID SẢN PHẨM */}
+   
                         <div className="relative flex-grow">
                             {loading && (
                                 <div className="absolute inset-0 bg-white/50 z-10 flex items-center justify-center">
@@ -288,7 +277,7 @@ const ProductsPage = () => {
                             {products.length > 0 ? (
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                     
-                                    {/* --- CHỖ NÀY ĐÃ SỬA: GỌI COMPONENT ProductCard --- */}
+                             
                                     {products.map((product) => (
                                         <div key={product.id || product._id} className="h-full">
                                             {/* Truyền product vào, logic thêm giỏ hàng tự chạy bên trong ProductCard */}
@@ -310,7 +299,7 @@ const ProductsPage = () => {
                             )}
                         </div>
 
-                        {/* Pagination */}
+                   
                         <Pagination
                             currentPage={currentPage}
                             totalPages={totalPages}
