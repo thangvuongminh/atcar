@@ -25,7 +25,7 @@ export const useAdminDashboardStore = create((set, get) => ({
   keys: [BOOKINGS_KEY, POSTS_KEY, PRODUCTS_KEY, ORDERS_KEY],
 
   data: () => {
-    const { tick } = get(); // just to depend
+    const { tick } = get(); 
     void tick;
 
     const bookings = loadList(BOOKINGS_KEY);
