@@ -20,11 +20,10 @@ const AdminLayout = () => {
   const sidebarOpen = useAdminLayoutStore((s) => s.sidebarOpen);
   const setSidebarOpen = useAdminLayoutStore((s) => s.setSidebarOpen);
 
-  // Lấy thông tin user để check quyền
+
   const user = useAuthStore((s) => s.user);
   const logoutStore = useAuthStore((s) => s.logout);
 
-  // Logic xác định quyền (copy từ Header qua cho đồng bộ)
   const roleName = String(user?.roleName ?? user?.role ?? user?.Role ?? "")
     .toUpperCase()
     .trim();
@@ -47,17 +46,17 @@ const AdminLayout = () => {
     { name: "Post Approvals", path: "/admin/post-approvals", icon: FileCheck },
   ];
 
-  // --- LỌC MENU: Nếu là Admin thì bỏ dòng Dashboard đi ---
+  
   const visibleNavItems = navItems.filter((item) => {
     if (isAdmin && item.name === "Dashboard") {
-      return false; // Ẩn
+      return false; 
     }
-    return true; // Hiện các mục khác
+    return true; 
   });
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
+   
       <aside className="w-64 bg-white shadow-md p-4">
         <h2 className="text-xl font-bold text-blue-600 mb-6">Admin</h2>
 
@@ -68,7 +67,7 @@ const AdminLayout = () => {
         />
 
         <nav className="space-y-2">
-          {/* Render danh sách đã lọc (visibleNavItems) */}
+         
           {visibleNavItems.map(({ name, path, icon: Icon }) => (
             <Link
               key={name}
@@ -94,7 +93,6 @@ const AdminLayout = () => {
         </nav>
       </aside>
 
-      {/* Nội dung chính */}
       <main className="flex-1 p-6 overflow-y-auto">
         <Outlet />
       </main>
