@@ -33,15 +33,15 @@ export default function CreateEditorAccount() {
     loading,
     page,
     totalPages,
-    setPage, // Lấy state phân trang
+    setPage,
     filters,
-    setFilter, // Lấy state filter
+    setFilter, 
   } = useAdminCreateEditorStore();
 
-  // Debounce state cho ô tìm kiếm
+  
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Modal state
+
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
 
@@ -65,7 +65,7 @@ export default function CreateEditorAccount() {
     init();
   }, [init]);
 
-  // Xử lý Debounce cho Tên (500ms sau khi gõ mới gọi API)
+ 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (searchTerm !== filters.name) {
@@ -81,7 +81,7 @@ export default function CreateEditorAccount() {
     if (success) reset();
   };
 
-  // Pagination Helper: Tạo mảng số trang [0, 1, 2...]
+
   const renderPaginationButtons = () => {
     if (totalPages <= 1) return null;
     let buttons = [];
@@ -103,7 +103,6 @@ export default function CreateEditorAccount() {
     return buttons;
   };
 
-  // Modal Logic
   const handleDeleteClick = (user) => {
     setUserToDelete(user);
     setIsDeleteModalOpen(true);
@@ -117,7 +116,7 @@ export default function CreateEditorAccount() {
   };
 
   if (!canManageEditors && typeof canManageEditors !== "function") {
-    // fallback check
+
   }
 
   const inputFields = [
@@ -182,14 +181,14 @@ export default function CreateEditorAccount() {
     <div className="relative min-h-screen flex justify-center items-start p-6 bg-slate-50 overflow-hidden font-sans">
       <Toaster position="top-right" />
 
-      {/* Background */}
+     
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-400/20 rounded-full blur-[100px] mix-blend-multiply animate-blob"></div>
         <div className="absolute top-[-10%] right-[-10%] w-96 h-96 bg-purple-400/20 rounded-full blur-[100px] mix-blend-multiply animate-blob animation-delay-2000"></div>
       </div>
 
       <div className="relative z-10 bg-white/90 backdrop-blur-xl w-full max-w-7xl rounded-[2rem] shadow-2xl border border-white/50 overflow-hidden flex flex-col lg:flex-row h-[85vh]">
-        {/* --- FORM TẠO MỚI --- */}
+      
         <div className="w-full lg:w-4/12 p-8 flex flex-col border-r border-gray-100 overflow-y-auto custom-scrollbar">
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-bold uppercase mb-3">
@@ -252,9 +251,9 @@ export default function CreateEditorAccount() {
           </form>
         </div>
 
-        {/* --- DANH SÁCH & BỘ LỌC --- */}
+     
         <div className="w-full lg:w-8/12 bg-gray-50/30 flex flex-col">
-          {/* Header Filters */}
+        
           <div className="p-6 border-b border-gray-200 bg-white space-y-4">
             <div className="flex justify-between items-center">
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2">
@@ -263,7 +262,7 @@ export default function CreateEditorAccount() {
                   {users.length}
                 </span>
               </h3>
-              {/* Search Tên */}
+         
               <div className="relative w-64">
                 <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
                 <input
@@ -275,7 +274,7 @@ export default function CreateEditorAccount() {
                 />
               </div>
             </div>
-            {/* 3 Ô Lọc Chi Tiết */}
+        
             <div className="grid grid-cols-3 gap-3">
               <input
                 type="text"
@@ -310,7 +309,7 @@ export default function CreateEditorAccount() {
             </div>
           </div>
 
-          {/* Table Body */}
+     
           <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
             {users.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-gray-400 border-2 border-dashed border-gray-200 rounded-xl">
@@ -357,7 +356,7 @@ export default function CreateEditorAccount() {
             )}
           </div>
 
-          {/* PAGINATION */}
+    
           {totalPages > 1 && (
             <div className="p-4 border-t border-gray-200 bg-white flex justify-between items-center">
               <span className="text-xs text-gray-500">
@@ -385,7 +384,7 @@ export default function CreateEditorAccount() {
         </div>
       </div>
 
-      {/* Custom Modal */}
+    
       {isDeleteModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 animate-in fade-in">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 animate-in zoom-in-95">
@@ -418,7 +417,7 @@ export default function CreateEditorAccount() {
         </div>
       )}
 
-      {/* Styles */}
+
       <style>{`.custom-scrollbar::-webkit-scrollbar{width:4px}.custom-scrollbar::-webkit-scrollbar-thumb{background:#e2e8f0;border-radius:10px}.animate-blob{animation:blob 7s infinite}@keyframes blob{0%{transform:translate(0px,0px) scale(1)}33%{transform:translate(30px,-50px) scale(1.1)}66%{transform:translate(-20px,20px) scale(0.9)}100%{transform:translate(0px,0px) scale(1)}}`}</style>
     </div>
   );
