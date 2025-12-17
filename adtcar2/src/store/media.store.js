@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-// Giả lập dữ liệu mẫu (Xoá đi khi nối API thật)
+
 const MOCK_FILES = [
     {
         id: 1,
@@ -20,14 +20,10 @@ export const useMediaStore = create((set, get) => ({
     files: [],
     isLoading: false,
 
-    // 1. Khởi tạo: Load danh sách file từ server
     init: async () => {
         set({ isLoading: true });
         try {
-            // const res = await axios.get('/api/media');
-            // set({ files: res.data });
-
-            // Giả lập delay
+            
             setTimeout(() => set({ files: MOCK_FILES, isLoading: false }), 500);
         } catch (error) {
             console.error("Lỗi load media:", error);
@@ -35,23 +31,19 @@ export const useMediaStore = create((set, get) => ({
         }
     },
 
-    // 2. Upload file (Hỗ trợ nhiều file cùng lúc)
+
     uploadFiles: async (fileList) => {
         set({ isLoading: true });
         try {
             const formData = new FormData();
             Array.from(fileList).forEach((file) => {
-                formData.append("files", file); // Key 'files' phải khớp với MultipartFile[] backend
+                formData.append("files", file); 
             });
 
-            // const res = await axios.post('/api/media/upload', formData, {
-            //   headers: { 'Content-Type': 'multipart/form-data' }
-            // });
-
-            // Giả lập upload thành công
+          
             const newFiles = Array.from(fileList).map((f, index) => ({
                 id: Date.now() + index,
-                url: URL.createObjectURL(f), // Demo hiển thị tạm
+                url: URL.createObjectURL(f), 
                 name: f.name,
                 type: f.type,
             }));
@@ -66,7 +58,7 @@ export const useMediaStore = create((set, get) => ({
         }
     },
 
-    // 3. Xoá file
+ 
     deleteFile: async (id) => {
         if (!window.confirm("Bạn có chắc muốn xoá file này không?")) return;
         try {
