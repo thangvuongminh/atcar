@@ -14,14 +14,14 @@ import {
     Trash2,
 } from "lucide-react";
 
-// --- HÀM GHÉP LINK ẢNH ---
+
 const getFullUrl = (path) => {
     if (!path) return "";
     if (path.startsWith("http")) return path;
     return `http://localhost:8080/storage/${path}`;
 };
 
-// --- COMPONENT THƯ VIỆN ---
+
 const MediaLibraryBlock = ({ selectedUrls, toggleUrl }) => {
     const [folders, setFolders] = useState([]);
     const [activeFolder, setActiveFolder] = useState(null);
@@ -100,7 +100,7 @@ const MediaLibraryBlock = ({ selectedUrls, toggleUrl }) => {
     );
 };
 
-// --- TRANG CHÍNH ---
+
 export default function PostEditor() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -120,7 +120,7 @@ export default function PostEditor() {
     const [selectedUrls, setSelectedUrls] = useState([]);
     const [notification, setNotification] = useState(null);
 
-    // 1. Load dữ liệu
+
     useEffect(() => {
         reset();
         axiosClient.get("/category/all").then((res) => {
@@ -129,9 +129,8 @@ export default function PostEditor() {
         if (id) getPostDetail(id);
     }, [id]);
 
-    // 2. Đồng bộ dữ liệu cũ vào state hiển thị
     useEffect(() => {
-        // Ở API bạn là urlImg, nên ưu tiên form.urlImg
+  
         let raw = form.urlImg ?? form.url;
         if (!raw) {
             setSelectedUrls([]);
@@ -143,7 +142,7 @@ export default function PostEditor() {
         if (Array.isArray(raw)) {
             urls = raw;
         } else if (typeof raw === "string") {
-            // nếu backend lỡ trả string JSON thì parse
+        
             if (raw.trim().startsWith("[")) {
                 try {
                     urls = JSON.parse(raw);
@@ -157,12 +156,12 @@ export default function PostEditor() {
             urls = [];
         }
 
-        // Chuẩn hóa: bỏ http://.../storage/ nếu có
+ 
         const normalized = urls
             .filter(Boolean)
             .map((u) => u.replace(/^https?:\/\/[^/]+\/storage\//, ""));
 
-        setSelectedUrls(normalized); // luôn là path kiểu marketing/xxx.jpg
+        setSelectedUrls(normalized); 
     }, [form.urlImg, form.url]);
 
     const handleToggleUrl = (url) =>
@@ -178,9 +177,9 @@ export default function PostEditor() {
         e.preventDefault();
         onChange("files", selectedFiles);
 
-        // gửi path lên backend (urlImg là field thật của bạn)
+      
         onChange("urlImg", selectedUrls);
-        // nếu store/BE vẫn còn dùng url thì gán luôn cho chắc
+ 
         onChange("url", selectedUrls);
 
         const result = await submit();
@@ -220,7 +219,7 @@ export default function PostEditor() {
                 </div>
             )}
 
-            {/* Header */}
+  
             <div className="sticky top-0 z-30 bg-white border-b px-6 py-3 flex items-center justify-between shadow-sm">
                 <div className="flex items-center gap-3">
                     <button
@@ -262,7 +261,7 @@ export default function PostEditor() {
                 </div>
             </div>
 
-            {/* Form */}
+            
             <div className="max-w-5xl mx-auto px-6 py-8 space-y-6">
                 <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
                     <label className="block text-sm font-bold text-gray-700 mb-2">
@@ -297,7 +296,7 @@ export default function PostEditor() {
                     </select>
                 </div>
 
-                {/* --- PHẦN MEDIA --- */}
+             
                 <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
                     <div className="flex justify-between items-center mb-3">
                         <label className="text-sm font-bold text-gray-700">
@@ -329,7 +328,7 @@ export default function PostEditor() {
                         </div>
                     </div>
 
-                    {/* Ảnh đang chọn */}
+              
                     {selectedUrls.length > 0 && (
                         <div className="mb-4 p-4 bg-blue-50 border border-blue-100 rounded-lg">
                             <p className="text-xs font-bold text-blue-700 mb-2 uppercase flex items-center gap-2">
