@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WebSearchRetrieveConfiguration implements DocumentRetriever {
-    private  String apiKey="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";
+    private  String apiKey="";
     private String baseUrl="https://api.tavily.com/search";
     private RestClient restClient;
     private   int resultLimit=5;
