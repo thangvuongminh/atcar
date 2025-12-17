@@ -4,7 +4,7 @@ import { useForgotPasswordStore } from "../store/forgotPassword.store";
 import axios from "axios";
 
 const ForgotPasswordPage = () => {
-    // Lấy state và actions từ Store
+    
     const step = useForgotPasswordStore((s) => s.step);
     const loading = useForgotPasswordStore((s) => s.loading);
     const form1 = useForgotPasswordStore((s) => s.form1);
@@ -17,7 +17,7 @@ const ForgotPasswordPage = () => {
 
     const navigate = useNavigate();
 
-    // --- BƯỚC 1: GỬI EMAIL LẤY OTP ---
+   
     const handleRequestOtp = async (e) => {
         e.preventDefault();
 
@@ -28,7 +28,7 @@ const ForgotPasswordPage = () => {
             success: "",
         });
 
-        // 2. Validate React (Thay thế HTML required)
+     
         const emailValue = form1.email.trim();
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -45,7 +45,7 @@ const ForgotPasswordPage = () => {
             return;
         }
 
-        // 3. Gọi API nếu validate OK
+    
         useForgotPasswordStore.setState({ loading: true });
         try {
             const response = await axios.post(
@@ -79,18 +79,18 @@ const ForgotPasswordPage = () => {
         }
     };
 
-    // --- BƯỚC 2: ĐỔI MẬT KHẨU ---
+ 
     const handleSubmitReset = async (e) => {
         e.preventDefault();
 
-        // 1. Reset lỗi cũ
+
         useForgotPasswordStore.setState({
             loading: false,
             error: "",
             success: "",
         });
 
-        // 2. Validate React (Thay thế HTML required/minLength)
+  
         const { otp, newPassword, confirmPassword } = form2;
 
         if (!otp.trim()) {
@@ -126,7 +126,6 @@ const ForgotPasswordPage = () => {
             return;
         }
 
-        // 3. Gọi API nếu validate OK
         useForgotPasswordStore.setState({ loading: true });
 
         try {
@@ -164,7 +163,7 @@ const ForgotPasswordPage = () => {
         }
     };
 
-    // Icon SVG components
+ 
     const MailIcon = () => (
         <svg
             className="w-5 h-5 text-gray-400"
@@ -241,7 +240,7 @@ const ForgotPasswordPage = () => {
                     </p>
                 </div>
 
-                {/* Body */}
+           
                 <div className="p-8">
                     {error && (
                         <div className="mb-6 flex items-center bg-red-50 border-l-4 border-red-500 text-red-700 px-4 py-3 rounded-r shadow-sm animate-pulse">
@@ -257,8 +256,8 @@ const ForgotPasswordPage = () => {
                     )}
 
                     {step === 1 ? (
-                        /* --- FORM BƯỚC 1 --- */
-                        // Thêm noValidate để tắt check HTML5
+                       
+                        
                         <Form
                             method="post"
                             onSubmit={handleRequestOtp}
@@ -275,7 +274,7 @@ const ForgotPasswordPage = () => {
                                     </div>
                                     <input
                                         type="email"
-                                        // Đã xóa 'required'
+                                       
                                         value={form1.email}
                                         onChange={(e) =>
                                             set1("email", e.target.value)
@@ -304,8 +303,8 @@ const ForgotPasswordPage = () => {
                             </div>
                         </Form>
                     ) : (
-                        /* --- FORM BƯỚC 2 --- */
-                        // Thêm noValidate để tắt check HTML5
+                        
+                       
                         <Form
                             method="post"
                             onSubmit={handleSubmitReset}
@@ -330,7 +329,7 @@ const ForgotPasswordPage = () => {
                                 </div>
                             </div>
 
-                            {/* OTP */}
+                        
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-1">
                                     Mã OTP
@@ -341,7 +340,7 @@ const ForgotPasswordPage = () => {
                                     </div>
                                     <input
                                         type="text"
-                                        // Đã xóa 'required'
+                                       
                                         value={form2.otp}
                                         onChange={(e) =>
                                             set2("otp", e.target.value)
@@ -352,7 +351,7 @@ const ForgotPasswordPage = () => {
                                 </div>
                             </div>
 
-                            {/* Mật khẩu mới */}
+                            
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-1">
                                     Mật khẩu mới
@@ -363,7 +362,7 @@ const ForgotPasswordPage = () => {
                                     </div>
                                     <input
                                         type="password"
-                                        // Đã xóa 'required' và 'minLength' html
+                                       
                                         value={form2.newPassword}
                                         onChange={(e) =>
                                             set2("newPassword", e.target.value)
@@ -374,7 +373,7 @@ const ForgotPasswordPage = () => {
                                 </div>
                             </div>
 
-                            {/* Xác nhận mật khẩu */}
+                         
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-1">
                                     Xác nhận mật khẩu
@@ -385,7 +384,7 @@ const ForgotPasswordPage = () => {
                                     </div>
                                     <input
                                         type="password"
-                                        // Đã xóa 'required'
+                                       
                                         value={form2.confirmPassword}
                                         onChange={(e) =>
                                             set2(
