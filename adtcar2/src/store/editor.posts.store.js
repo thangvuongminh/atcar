@@ -18,11 +18,11 @@ export const useEditorPostsStore = create((set, get) => ({
         set((s) => ({ form: { ...s.form, [name]: value } })),
     reset: () => set({ form: initialForm, editingId: null }),
 
-    // 1. LẤY CHI TIẾT BÀI VIẾT (ĐỂ ĐỔ VÀO FORM SỬA)
+   
     getPostDetail: async (id) => {
         set({ isLoading: true });
         try {
-            // Gọi API danh sách rồi tìm item theo ID
+          
             const res = await axiosClient.get("/get/post");
             const posts = res.data?.data || [];
             const post = posts.find((p) => p.id == id);
@@ -50,7 +50,7 @@ export const useEditorPostsStore = create((set, get) => ({
         }
     },
 
-    // 2. SUBMIT (UPDATE HOẶC CREATE)
+  
     submit: async () => {
         const { form, editingId } = get();
         if (!form.title?.trim())
@@ -73,10 +73,10 @@ export const useEditorPostsStore = create((set, get) => ({
                 form.files.forEach((f) => formData.append("files", f));
             }
 
-            // --- UPDATE (PUT) ---
+          
             if (editingId) {
                 console.log("Update ID:", editingId);
-                // - @PutMapping("/upload/post/update/{id}")
+             
                 await axiosClient.put(
                     `/upload/post/update/${editingId}`,
                     formData,
@@ -85,10 +85,10 @@ export const useEditorPostsStore = create((set, get) => ({
                     }
                 );
             }
-            // --- CREATE (POST) ---
+          
             else {
                 console.log("Create New");
-                // - POST /upload/post
+              
                 await axiosClient.post("/upload/post", formData, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
@@ -110,12 +110,11 @@ export const useEditorPostsStore = create((set, get) => ({
         }
     },
 
-    // 3. DELETE (PATCH)
     deletePost: async (id) => {
         if (!confirm("Bạn có chắc muốn xóa bài này?")) return;
         set({ isLoading: true });
         try {
-            // - @PatchMapping("/upload/delete/post/{id}")
+           
             await axiosClient.delete(`/upload/delete/post/${id}`);
             return { success: true, message: "Đã xóa thành công!" };
         } catch (error) {
