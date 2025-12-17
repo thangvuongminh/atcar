@@ -18,10 +18,10 @@ const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // --- STATE TIỀN NONG ---
+ 
   const [subTotal, setSubTotal] = useState(0);
 
-  // --- STATE COUPON ---
+ 
   const [couponCode, setCouponCode] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState(null); // Lưu mã đã áp dụng thành công
   const [discountPercent, setDiscountPercent] = useState(0); // Lưu % giảm giá
@@ -65,7 +65,7 @@ const CartPage = () => {
     }
   };
 
-  // Tính Tạm tính mỗi khi cartItems thay đổi
+ 
   useEffect(() => {
     if (cartItems.length > 0) {
       const total = cartItems.reduce(
@@ -78,7 +78,7 @@ const CartPage = () => {
     }
   }, [cartItems]);
 
-  // --- LOGIC ÁP DỤNG COUPON ---
+
   const handleApplyCoupon = async () => {
     if (!couponCode.trim()) {
       toast.error("Vui lòng nhập mã giảm giá!");
@@ -91,7 +91,7 @@ const CartPage = () => {
       });
 
       const dataObj = response.data ? response.data : response;
-      // API trả về data là số % (VD: 10, 20...) hoặc -1 nếu lỗi
+      
       const result = dataObj.data !== undefined ? dataObj.data : -1;
 
       if (result === -1) {
@@ -116,11 +116,10 @@ const CartPage = () => {
     toast.success("Đã gỡ mã giảm giá");
   };
 
-  // Tính toán các con số cuối cùng
   const discountAmount = (subTotal * discountPercent) / 100;
   const finalTotal = subTotal - discountAmount;
 
-  // --- TẠO ĐƠN HÀNG ---
+
   const handleCreateOrder = async () => {
     if (cartItems.length === 0) {
       toast.error("Giỏ hàng đang trống!");
@@ -202,7 +201,7 @@ const CartPage = () => {
       </div>
     );
 
-  // --- EMPTY STATE ---
+
   if (cartItems.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
@@ -227,7 +226,7 @@ const CartPage = () => {
     );
   }
 
-  // --- MAIN LAYOUT ---
+
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4 max-w-6xl">
@@ -239,7 +238,7 @@ const CartPage = () => {
         </h1>
 
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* --- CỘT TRÁI: DANH SÁCH SP --- */}
+         
           <div className="w-full lg:w-2/3 space-y-4">
             {cartItems.map((item) => (
               <div
@@ -309,14 +308,14 @@ const CartPage = () => {
             ))}
           </div>
 
-          {/* --- CỘT PHẢI: THANH TOÁN --- */}
+         
           <div className="w-full lg:w-1/3">
             <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 sticky top-24">
               <h2 className="text-lg font-bold text-gray-800 mb-6 pb-4 border-b border-gray-100">
                 Thông tin đơn hàng
               </h2>
 
-              {/* GHI CHÚ */}
+        
               <div className="mb-6">
                 <label className="text-sm font-semibold text-gray-600 mb-2 flex items-center gap-2">
                   <FileText size={16} /> Ghi chú
@@ -330,7 +329,7 @@ const CartPage = () => {
                 />
               </div>
 
-              {/* MÃ GIẢM GIÁ */}
+           
               <div className="mb-6 pb-6 border-b border-dashed border-gray-200">
                 <label className="text-sm font-semibold text-gray-600 mb-2 flex items-center gap-2">
                   <Ticket size={16} /> Mã giảm giá
@@ -372,7 +371,7 @@ const CartPage = () => {
                 )}
               </div>
 
-              {/* TỔNG KẾT */}
+           
               <div className="space-y-3 mb-8">
                 <div className="flex justify-between text-gray-500">
                   <span>Tạm tính</span>
