@@ -24,7 +24,7 @@ const Header = () => {
   const loading = useAuthStore((s) => s.loading);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated());
 
-  // --- LẤY DATA TỪ STORE ZUSTAND ---
+  
   const cartCount = useCartStore((state) => state.cartCount);
   const fetchCart = useCartStore((state) => state.fetchCart);
   const resetCart = useCartStore((state) => state.resetCart);
@@ -44,7 +44,7 @@ const Header = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Khi Header load lên (hoặc login thành công) -> Gọi API lấy số lượng ngay
+  
   useEffect(() => {
     if (isUser) {
       fetchCart();
@@ -115,7 +115,7 @@ const Header = () => {
                 className="relative p-2 hover:text-indigo-400 transition"
               >
                 <ShoppingCart className="w-6 h-6" />
-                {/* Số lượng lấy trực tiếp từ Global Store - Tự động cập nhật */}
+               
                 {cartCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[11px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-gray-900 shadow-sm">
                     {cartCount}
