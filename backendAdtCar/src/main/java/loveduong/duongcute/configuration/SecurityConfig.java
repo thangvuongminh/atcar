@@ -38,7 +38,7 @@
         RestAuthEntryPoint restAuthEntryPoint;
         UserDetailsService userDetailsService;
         RedisFilterConfiguration redisFilterConfiguration;
-        String[] listPermit={"post/all","/category/all","marketing/**","product/home","product/**","/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html","/login","/refresh","/register","/forget-password","/new-password","storage/**"};
+        String[] listPermit={"postsImg/**","post/all","/category/all","marketing/**","product/home","product/**","/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html","/login","/refresh","/register","/forget-password","/new-password","storage/**"};
         @Value("${maintenance.security.authentication.jwt.base64-secret}")
          String jwtKey;
         SecurityConfig(UserDetailsService userDetailsService,RestAuthEntryPoint restAuthEntryPoint,@Lazy RedisFilterConfiguration redisFilterConfiguration){

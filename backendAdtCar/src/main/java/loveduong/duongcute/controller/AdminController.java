@@ -47,9 +47,6 @@ public class AdminController {
                 .build());
     }
     BookingRepository bookingRepository;
-    // ------------------------------------------------------------------
-    // XỬ LÝ UPDATE TRẠNG THÁI BOOKING (Làm trực tiếp tại Controller)
-    // ------------------------------------------------------------------
     @PatchMapping("/bookings/{id}/status")
     public ResponseEntity<ApiResponse<BookingResponse>> updateBookingStatus(
             @PathVariable String id,
