@@ -24,7 +24,7 @@ import SchedulePage from "./pages/SchedulePage";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import OrdersPage from "./pages/OrdersPage";
 
-// Admin
+
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import ProductsAdmin from "./pages/admin/ProductsAdmin";
@@ -34,7 +34,7 @@ import CreateEditorAccount from "./pages/admin/CreateEditorAccount";
 import PostApprovalsAdmin from "./pages/admin/PostApprovalsAdmin";
 import DiscountAdmin from "./pages/admin/DiscountAdmin";
 
-// Editor
+
 import EditorLayout from "./pages/editor/EditorLayout";
 import EditorDashboard from "./pages/editor/EditorDashboard";
 import PostsEditor from "./pages/editor/PostsEditor";
@@ -56,7 +56,7 @@ const router = createBrowserRouter([
       { path: "schedule", element: <SchedulePage /> },
       { path: "forgot-password", element: <ForgotPasswordPage /> },
 
-      // --- USER ---
+
       {
         path: "profile",
         element: (
@@ -66,7 +66,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "orders", // Route duy nhất cho đơn hàng
+        path: "orders",
         element: (
           <ProtectedRoute>
             <OrdersPage />
@@ -74,7 +74,7 @@ const router = createBrowserRouter([
         ),
       },
 
-      // --- ADMIN ---
+   
       {
         path: "admin",
         element: (
@@ -104,7 +104,7 @@ const router = createBrowserRouter([
         ],
       },
 
-      // --- EDITOR ---
+   
       {
         path: "editor",
         element: (
