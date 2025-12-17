@@ -1,4 +1,4 @@
-// src/store/admin.products.store.js
+
 import { create } from "zustand";
 import axiosClient from "./axiosClient";
 
@@ -9,8 +9,6 @@ export const useAdminProductsStore = create((set, get) => ({
     totalPages: 1,
     currentPage: 1,
 
-    // =================== 1. LẤY DANH SÁCH SẢN PHẨM (PHÂN TRANG + FILTER) ===================
-    // params có thể chứa: page, size, sort, filter=...
     fetchData: async (params) => {
         set({ loading: true });
         try {
@@ -31,12 +29,12 @@ export const useAdminProductsStore = create((set, get) => ({
             const data = res.data;
             const pageData = data.data || data;
 
-            // 1. danh sách sản phẩm
+    
             const items = Array.isArray(pageData)
                 ? pageData
                 : pageData.content || pageData.items || pageData.list || [];
 
-            // 2. tổng phần tử
+       
             let totalElements = 0;
             if (typeof pageData.totalElements !== "undefined")
                 totalElements = pageData.totalElements;
@@ -45,7 +43,7 @@ export const useAdminProductsStore = create((set, get) => ({
             else if (typeof data.totalElements !== "undefined")
                 totalElements = data.totalElements;
 
-            // 3. số trang
+    
             const size = finalParams.size || 5;
             let calcTotalPages = 1;
 
@@ -59,7 +57,6 @@ export const useAdminProductsStore = create((set, get) => ({
                 `🧮 [ADMIN] totalElements=${totalElements}, size=${size} => totalPages=${calcTotalPages}`
             );
 
-            // 4. trang hiện tại (0-based -> 1-based)
             let backendPageNumber = 0;
             if (typeof pageData.number === "number")
                 backendPageNumber = pageData.number;
@@ -88,7 +85,6 @@ export const useAdminProductsStore = create((set, get) => ({
         }
     },
 
-    // =================== 2. TẠO MỚI / UPDATE SẢN PHẨM ===================
     submit: async (payload) => {
         set({ loading: true });
 
@@ -122,7 +118,7 @@ export const useAdminProductsStore = create((set, get) => ({
                 });
             }
 
-            // gọi lại fetchData không params -> sẽ dùng default {page:0,size:5}
+         
             await fetchData();
 
             set({ editingProduct: null });
@@ -136,19 +132,15 @@ export const useAdminProductsStore = create((set, get) => ({
         }
     },
 
-    // =================== 3. BẮT ĐẦU / DỪNG EDIT ===================
     startEdit: (p) => set({ editingProduct: p }),
     stopEdit: () => set({ editingProduct: null }),
 
-    // =================== 4. XOÁ THEO ID (tạm thời xoá trên UI) ===================
+  
     deleteById: async (id) => {
         const { fetchData } = get();
 
         try {
-            // Sau này có API thật thì:
-            // await axiosClient.delete(`/admin/product/delete/${id}`);
-            // await fetchData();
-
+           
             console.log("Xóa ID:", id);
             set((state) => ({
                 products: state.products.filter(
