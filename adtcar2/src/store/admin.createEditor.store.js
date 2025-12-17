@@ -1,19 +1,19 @@
 import { create } from "zustand";
 import { toast } from "react-hot-toast";
-import axiosClient from "./axiosClient"; // Đảm bảo đúng đường dẫn file axiosClient
+import axiosClient from "./axiosClient"; 
 
 export const useAdminCreateEditorStore = create((set, get) => ({
   users: [],
   loading: false,
   canManageEditors: false,
 
-  // --- Pagination ---
+  
   page: 0,
   size: 5,
   totalPages: 0,
   totalElements: 0,
 
-  // --- Filter State ---
+  
   filters: {
     name: "",
     email: "",
@@ -24,7 +24,7 @@ export const useAdminCreateEditorStore = create((set, get) => ({
   setFilter: (field, value) =>
     set((state) => ({
       filters: { ...state.filters, [field]: value },
-      page: 0, // Reset về trang 0 khi search
+      page: 0, 
     })),
 
   setPage: (newPage) => {
@@ -32,9 +32,9 @@ export const useAdminCreateEditorStore = create((set, get) => ({
     get().fetchEditors();
   },
 
-  // --- Init ---
+
   init: async () => {
-    // Check quyền UI
+  
     let canManage = false;
     try {
       const raw = localStorage.getItem("auth_v1");
@@ -50,18 +50,17 @@ export const useAdminCreateEditorStore = create((set, get) => ({
     }
     set({ canManageEditors: canManage });
 
-    // Gọi API
+   
     await get().fetchEditors();
   },
 
-  // --- FETCH EDITORS (Chuẩn Turkraft) ---
+ 
   fetchEditors: async () => {
     const { page, size, filters } = get();
     try {
       set({ loading: true });
 
-      // 1. Build chuỗi Filter theo cú pháp Turkraft / Spring Filter
-      // Cú pháp: field~'*value*' (Like) hoặc field:'value' (Equal)
+     
       const filterConditions = [];
 
       if (filters.name) filterConditions.push(`name~'*${filters.name}*'`);
@@ -70,16 +69,15 @@ export const useAdminCreateEditorStore = create((set, get) => ({
       if (filters.address)
         filterConditions.push(`address~'*${filters.address}*'`);
 
-      // Nối các điều kiện bằng ' and '
+     
       const filterQuery =
         filterConditions.length > 0 ? filterConditions.join(" and ") : null;
 
-      // 2. Tạo params
+     
       const params = {
         page: page,
         size: size,
-        // Turkraft thường map query param tên là 'filter' hoặc 'search' (tùy config backend của bạn)
-        // Nếu backend mặc định, nó thường đọc param 'filter'
+       
         ...(filterQuery && { filter: filterQuery }),
       };
 
@@ -108,7 +106,7 @@ export const useAdminCreateEditorStore = create((set, get) => ({
     }
   },
 
-  // --- Create ---
+
   createEditor: async (formData) => {
     const { fetchEditors } = get();
     try {
@@ -126,12 +124,11 @@ export const useAdminCreateEditorStore = create((set, get) => ({
     }
   },
 
-  // --- Remove ---
   removeEditor: async (email) => {
     const { fetchEditors } = get();
     try {
       set({ loading: true });
-      // Lúc này biến email mới có giá trị để nhét vào URL
+      
       await axiosClient.patch(`/admin/editor/delete/${email}`);
 
       toast.success("Đã xóa tài khoản!");
@@ -139,7 +136,7 @@ export const useAdminCreateEditorStore = create((set, get) => ({
       set({ loading: false });
       return true;
     } catch (error) {
-      // Ông log cái error ra sẽ thấy nó báo lỗi code JS chứ ko phải lỗi mạng
+      
       console.error("Lỗi xóa:", error);
 
       set({ loading: false });
