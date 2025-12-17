@@ -12,7 +12,6 @@ import {
   Clock,
 } from "lucide-react";
 
-// Định nghĩa base URL cho ảnh
 const IMAGE_BASE_URL = "http://localhost:8080/storage";
 
 const PostsPage = () => {
@@ -68,10 +67,10 @@ const PostsPage = () => {
         </div>
       </div>
 
-      {/* MAIN CONTENT AREA */}
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 relative z-20">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* --- LEFT COLUMN: POST LIST --- */}
+        
           <div className="lg:w-2/3">
             {displayPosts.length > 0 ? (
               <div className="flex flex-col gap-8">
@@ -81,7 +80,7 @@ const PostsPage = () => {
                     key={post.id}
                     className="group bg-white rounded-2xl overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 border border-gray-100 flex flex-col md:flex-row h-full md:h-[260px]"
                   >
-                    {/* --- ẢNH --- */}
+                   
                     <div className="md:w-2/5 overflow-hidden relative">
                       <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10"></div>
                       <img
@@ -97,7 +96,7 @@ const PostsPage = () => {
                             "https://via.placeholder.com/400x300?text=No+Image";
                         }}
                       />
-                      {/* Category Badge dạng Glassmorphism */}
+                     
                       <div className="absolute top-4 left-4 z-20">
                         <span className="bg-white/90 backdrop-blur-sm text-indigo-700 text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm uppercase tracking-wide">
                           {post.categoryName}
@@ -105,9 +104,9 @@ const PostsPage = () => {
                       </div>
                     </div>
 
-                    {/* --- NỘI DUNG --- */}
+                
                     <div className="p-6 md:w-3/5 flex flex-col justify-center">
-                      {/* Meta Info */}
+                   
                       <div className="flex items-center gap-4 text-xs font-medium text-gray-400 mb-3">
                         <div className="flex items-center gap-1.5">
                           <Calendar size={14} className="text-indigo-500" />
@@ -119,17 +118,17 @@ const PostsPage = () => {
                         </div>
                       </div>
 
-                      {/* Title */}
+                
                       <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-indigo-700 transition-colors leading-snug">
                         {post.title}
                       </h2>
 
-                      {/* Description */}
+                     
                       <p className="text-gray-500 text-sm line-clamp-2 mb-5 leading-relaxed">
                         {post.description}
                       </p>
 
-                      {/* Author / Footer */}
+                    
                       <div className="mt-auto flex items-center gap-3 pt-4 border-t border-gray-50">
                         <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-xs">
                           {post.create_by
@@ -159,9 +158,9 @@ const PostsPage = () => {
             )}
           </div>
 
-          {/* --- RIGHT COLUMN: SIDEBAR --- */}
+         
           <div className="lg:w-1/3 space-y-8">
-            {/* Search Widget */}
+          
             <div className="bg-white p-6 rounded-2xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] border border-gray-100 sticky top-4">
               <h3 className="font-bold text-gray-900 mb-5 flex items-center gap-2 text-lg">
                 <Search size={20} className="text-indigo-600" /> Tìm kiếm
@@ -181,7 +180,7 @@ const PostsPage = () => {
               </div>
             </div>
 
-            {/* Categories Widget */}
+          
             <div className="bg-white p-6 rounded-2xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] border border-gray-100">
               <h3 className="font-bold text-gray-900 mb-5 flex items-center gap-2 text-lg">
                 <Tag size={20} className="text-indigo-600" /> Danh mục
