@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-// --- ICONS ---
 const UserIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +79,7 @@ const RegisterPage = () => {
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [errors, setErrors] = useState({});
 
-  // State mới để hiển thị lỗi từ server (thay cho alert)
+ 
   const [serverError, setServerError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
@@ -91,7 +90,7 @@ const RegisterPage = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     if (errors[name]) setErrors({ ...errors, [name]: "" });
-    // Xóa lỗi server khi người dùng nhập lại để thử lại
+
     if (serverError) setServerError("");
   };
 
@@ -141,7 +140,7 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setServerError(""); // Reset lỗi cũ
+    setServerError(""); 
     setSuccess("");
 
     if (!validateForm()) return;
@@ -167,7 +166,7 @@ const RegisterPage = () => {
       }
     } catch (err) {
       console.error(err);
-      // THAY THẾ ALERT: Set state để hiển thị lỗi ra UI
+    
       const message =
         err.response?.data?.message || "Đăng ký thất bại. Vui lòng thử lại.";
       setServerError(message);
@@ -248,7 +247,7 @@ const RegisterPage = () => {
         </div>
 
         <form className="mt-8 space-y-4" onSubmit={handleSubmit} noValidate>
-          {/* --- HIỂN THỊ LỖI TỪ API (THAY THẾ ALERT) --- */}
+        
           {serverError && (
             <div className="rounded-xl bg-red-50 p-4 border border-red-200 flex items-center justify-center animate-pulse">
               <div className="flex-shrink-0">
@@ -272,7 +271,7 @@ const RegisterPage = () => {
             </div>
           )}
 
-          {/* Success Message Banner */}
+     
           {success && (
             <div className="rounded-xl bg-green-50 p-4 border border-green-200 flex items-center justify-center animate-bounce">
               <div className="flex-shrink-0">
