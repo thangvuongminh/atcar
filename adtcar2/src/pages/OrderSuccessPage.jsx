@@ -6,7 +6,7 @@ const OrderSuccessPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Lấy dữ liệu từ CartPage hoặc OrdersPage gửi qua
+
   const orderData = location.state?.orderData;
 
   const formatCurrency = (value) =>
