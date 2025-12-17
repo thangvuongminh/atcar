@@ -21,12 +21,12 @@ export const useProductsStore = create((set) => ({
             const data = res.data;
             const pageData = data.data || data;
 
-            // 1. Lấy danh sách sản phẩm
+     
             const items = Array.isArray(pageData)
                 ? pageData
                 : pageData.content || pageData.items || pageData.list || [];
 
-            // 2. Lấy tổng số phần tử
+         
             let totalElements = 0;
             if (typeof pageData.totalElements !== "undefined")
                 totalElements = pageData.totalElements;
@@ -37,7 +37,7 @@ export const useProductsStore = create((set) => ({
             else if (typeof data.totalElements !== "undefined")
                 totalElements = data.totalElements;
 
-            // 3. Tính số trang
+       
             const size = params?.size || 6;
             let calcTotalPages = 1;
 
@@ -51,7 +51,7 @@ export const useProductsStore = create((set) => ({
                 `🧮 Tính toán: TotalElements=${totalElements}, Size=${size} => TotalPages=${calcTotalPages}`
             );
 
-            // 4. Lấy trang hiện tại (0-based -> 1-based)
+            
             let backendPageNumber = 0;
             if (typeof pageData.number === "number")
                 backendPageNumber = pageData.number;
