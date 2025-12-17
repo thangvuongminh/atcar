@@ -15,7 +15,7 @@ const Footer = () => {
     <footer className="bg-gradient-to-b from-gray-900 to-gray-800 text-gray-300 border-t border-gray-700">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
-          {/* Company Info */}
+         
           <div>
             <div className="flex items-center gap-2 mb-4">
               <ShoppingBag className="text-indigo-400 w-6 h-6" />
@@ -27,7 +27,7 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Quick Links */}
+         
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">
               Liên kết nhanh
@@ -56,7 +56,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Customer Service */}
+         
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">
               Hỗ trợ khách hàng
@@ -85,7 +85,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Info */}
+         
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">
               Thông tin liên hệ
@@ -103,7 +103,7 @@ const Footer = () => {
               </p>
             </div>
 
-            {/* Social Links */}
+            
             <div className="flex gap-4 mt-5">
               <a href="#" className="hover:text-indigo-400 transition">
                 <Facebook className="w-5 h-5" />
@@ -118,7 +118,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom line */}
+       
         <div className="border-t border-gray-700 mt-10 pt-6 text-center">
           <p className="text-sm text-gray-400">
             © {new Date().getFullYear()}{" "}
