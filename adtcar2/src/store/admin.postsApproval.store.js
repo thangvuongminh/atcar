@@ -13,7 +13,7 @@ export const useAdminPostApprovalsStore = create((set, get) => ({
   toast: null,
   toastType: "success",
 
-  // --- ACTIONS ---
+ 
 
   fetchPosts: async () => {
     const { page, size, statusFilter, q } = get();
@@ -49,7 +49,7 @@ export const useAdminPostApprovalsStore = create((set, get) => ({
     setTimeout(() => set({ toast: null }), 3000);
   },
 
-  // 1. Hàm đổi trạng thái (Giữ nguyên)
+ 
   changeStatus: async (id, newStatus) => {
     try {
       await axiosClient.get(`/admin/post/change/${id}`, {
@@ -63,13 +63,13 @@ export const useAdminPostApprovalsStore = create((set, get) => ({
     }
   },
 
-  // 2. HÀM XÓA (MỚI THÊM) - Gọi API /admin/post/delete/{id}
+ 
   deletePost: async (id) => {
     try {
-      // Gọi đúng API trong hình Postman bạn gửi
+     
       await axiosClient.get(`/admin/post/delete/${id}`);
       
-      get().fetchPosts(); // Load lại danh sách sau khi xóa
+      get().fetchPosts(); 
       get().showToast(`Đã xóa bài viết ${id} thành công`, "success");
     } catch (error) {
       console.error("Lỗi xóa bài:", error);
