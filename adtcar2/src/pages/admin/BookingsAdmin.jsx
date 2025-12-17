@@ -14,12 +14,12 @@ import {
   XCircle,
 } from "lucide-react";
 
-// ====== CONFIG (turkraft spring-filter) ======
+
 const API_BOOKINGS_FILTER = "/admin/bookings/filter";
 const API_RETAILS = "/retail/all";
 const API_UPDATE_STATUS = (id) => `/admin/bookings/${id}/status`;
 
-// ====== helpers ======
+
 const TIME_SLOTS = ["08:00", "10:00", "12:00", "14:00", "16:00"];
 
 const STATUS_OPTIONS = [
@@ -37,32 +37,26 @@ const formatDate = (iso) => {
 
 const classNames = (...arr) => arr.filter(Boolean).join(" ");
 
-// escape cho filter string (phòng dấu ')
+
 const escapeFilterText = (s) => String(s).replace(/'/g, "\\'");
 
-// Build filter turkraft từ UI
-// AND: ;
-// OR: |
+
 const buildFilter = ({ q, status, retailId, date, timeSlot }) => {
   const parts = [];
 
-  // Turkraft dùng dấu hai chấm (:) cho so sánh bằng
   if (status) parts.push(`status:'${status}'`);
   if (retailId) parts.push(`retail.id:${Number(retailId)}`);
 
-  // Lưu ý format ngày tháng phải khớp với Backend (thường là yyyy-MM-dd)
   if (date) parts.push(`timeBooking:'${date}'`);
   if (timeSlot) parts.push(`startTime:'${timeSlot}'`);
 
   if (q && q.trim()) {
     const t = q.replace(/'/g, "\\'");
-    // Turkraft:
-    // ~~ là toán tử LIKE (hoặc Contains tùy config)
-    // 'or' dùng chữ thường thay vì dấu |
+  
     parts.push(`(name~~'*${t}*' or phone~~'*${t}*')`);
   }
 
-  // Turkraft nối các điều kiện bằng từ khóa ' and ' (có khoảng trắng)
+
   return parts.join(" and ");
 };
 
@@ -100,23 +94,20 @@ const EmptyState = () => (
 );
 
 export default function AdminBookingsPage() {
-  // ====== DATA ======
+
   const [retails, setRetails] = useState([]);
   const [rows, setRows] = useState([]);
 
-  // ====== UI STATE ======
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
 
-  // ====== FILTER STATE ======
   const [q, setQ] = useState("");
   const [status, setStatus] = useState("PENDING");
   const [retailId, setRetailId] = useState("");
   const [date, setDate] = useState("");
   const [timeSlot, setTimeSlot] = useState("");
 
-  // ====== PAGINATION ======
-  // turkraft @Page dùng Pageable của Spring => page là 0-based
+
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
   const [total, setTotal] = useState(0);
@@ -130,7 +121,7 @@ export default function AdminBookingsPage() {
     return Boolean(q || status !== "" || retailId || date || timeSlot);
   }, [q, status, retailId, date, timeSlot]);
 
-  // ====== load retails ======
+
   useEffect(() => {
     const fetchRetails = async () => {
       try {
@@ -148,7 +139,6 @@ export default function AdminBookingsPage() {
     fetchRetails();
   }, []);
 
-  // ====== fetch bookings (turkraft) ======
   const fetchBookings = async () => {
     setLoading(true);
     setErr("");
@@ -159,14 +149,13 @@ export default function AdminBookingsPage() {
         filter: filter || undefined,
         page,
         size,
-        // sort nếu backend mày có support Pageable sort thì thêm:
-        // sort: "timeBooking,desc"
+       
       };
 
       const res = await axiosClient.get(API_BOOKINGS_FILTER, { params });
       const dataObj = res.data ? res.data : res;
 
-      // controller trả ApiResponse<Page<BookingResponse>>
+  
       const pageData = dataObj.data;
 
       if (pageData?.content) {
@@ -186,20 +175,19 @@ export default function AdminBookingsPage() {
     }
   };
 
-  // auto fetch khi filter đổi
   useEffect(() => {
     fetchBookings();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+ 
   }, [page, size, status, retailId, date, timeSlot]);
 
-  // search debounce
+  
   useEffect(() => {
     const t = setTimeout(() => {
       setPage(0);
       fetchBookings();
     }, 350);
     return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+ 
   }, [q]);
 
   const resetFilters = () => {
@@ -211,7 +199,7 @@ export default function AdminBookingsPage() {
     setPage(0);
   };
 
-  // ✅ backend tao đưa: @RequestParam BookingStatus status
+
   const updateStatus = async (id, nextStatus) => {
     try {
       await axiosClient.patch(API_UPDATE_STATUS(id), null, {
@@ -230,7 +218,7 @@ export default function AdminBookingsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="px-6 py-6">
-        {/* Header */}
+    
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
             <h1 className="text-2xl font-extrabold text-gray-900">
@@ -265,7 +253,7 @@ export default function AdminBookingsPage() {
           </div>
         </div>
 
-        {/* Filters */}
+    
         <div className="mt-5 bg-white border border-gray-100 rounded-2xl shadow-sm p-4">
           <div className="flex items-center justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-2 text-gray-700 font-bold">
@@ -285,7 +273,7 @@ export default function AdminBookingsPage() {
           </div>
 
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-3">
-            {/* Status */}
+          
             <div>
               <label className="text-xs font-bold text-gray-500">
                 Trạng thái
@@ -306,7 +294,7 @@ export default function AdminBookingsPage() {
               </select>
             </div>
 
-            {/* Retail */}
+        
             <div>
               <label className="text-xs font-bold text-gray-500">
                 Chi nhánh
@@ -334,7 +322,7 @@ export default function AdminBookingsPage() {
               </div>
             </div>
 
-            {/* Date */}
+         
             <div>
               <label className="text-xs font-bold text-gray-500">
                 Ngày hẹn
@@ -356,7 +344,7 @@ export default function AdminBookingsPage() {
               </div>
             </div>
 
-            {/* Time slot */}
+    
             <div>
               <label className="text-xs font-bold text-gray-500">
                 Khung giờ
@@ -384,7 +372,7 @@ export default function AdminBookingsPage() {
               </div>
             </div>
 
-            {/* Page size */}
+         
             <div>
               <label className="text-xs font-bold text-gray-500">Số dòng</label>
               <select
@@ -411,7 +399,6 @@ export default function AdminBookingsPage() {
           )}
         </div>
 
-        {/* Table */}
         <div className="mt-5 bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
           <div className="px-5 py-4 flex items-center justify-between">
             <div className="font-extrabold text-gray-900">
