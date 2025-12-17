@@ -29,7 +29,7 @@ const DiscountAdmin = () => {
 
     const [searchTerm, setSearchTerm] = useState("");
 
-    // ===== NOTICE =====
+  
     const [notice, setNotice] = useState({ type: "", message: "" });
 
     const showNotice = (type, message) => {
@@ -92,7 +92,7 @@ const DiscountAdmin = () => {
                     Quản lý Mã Giảm Giá
                 </h1>
 
-                {/* ===== NOTICE SLOT (LUÔN CHỪA CHỖ → KHÔNG NHẢY) ===== */}
+    
                 <div className="h-12 mb-4">
                     {notice.message && (
                         <div
@@ -108,7 +108,7 @@ const DiscountAdmin = () => {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* ===== FORM ===== */}
+                 
                     <div>
                         <div className="bg-white border rounded-xl">
                             <div className="p-4 border-b font-bold">
@@ -180,7 +180,7 @@ const DiscountAdmin = () => {
                         </div>
                     </div>
 
-                    {/* ===== LIST ===== */}
+                 
                     <div className="lg:col-span-2 bg-white border rounded-xl overflow-hidden">
                         <div className="p-4 border-b flex justify-between">
                             <input
