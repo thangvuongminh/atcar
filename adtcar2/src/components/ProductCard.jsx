@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; 
 import { ShoppingCart, LogIn, CheckCircle, X, AlertCircle } from "lucide-react";
 
-// --- IMPORT STORE & API ---
+
 import { useAuthStore } from "../store/auth.store";
 import { useCartStore } from "../store/cart.store";
 import axiosClient from "../store/axiosClient";
 
-// --- TOAST COMPONENT ---
+
 const CustomToast = ({ message, type, onClose }) => {
     useEffect(() => {
         const timer = setTimeout(() => onClose(), 3000);
@@ -38,7 +38,7 @@ const ProductCard = ({ product }) => {
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
     const [isLoading, setIsLoading] = useState(false);
 
-    // --- Helper functions ---
+    
     const formatPrice = (price) => {
         if (price == null) return "Liên hệ";
         return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND", maximumFractionDigits: 0 }).format(price);
@@ -53,10 +53,10 @@ const ProductCard = ({ product }) => {
     const discountPercent = calculateDiscount(product?.price, product?.priceFake);
     const name = product?.name || "Sản phẩm";
     
-    // --- LẤY DỮ LIỆU TỪ HÌNH ÔNG GỬI ---
-    // Thương hiệu (Input "Thương hiệu" trong Admin)
+    
+    
     const brandName = product?.brand; 
-    // Nhà SX (Input "Nhà SX" trong Admin)
+    
     const manufactureName = product?.manufacture; 
 
     const handleCardClick = () => {
@@ -96,7 +96,7 @@ const ProductCard = ({ product }) => {
             <div 
                 className="group relative bg-white rounded-xl overflow-hidden border border-gray-200 hover:border-indigo-400 hover:shadow-xl transition-all duration-300 flex flex-col h-full cursor-pointer"
             >
-                {/* ẢNH SẢN PHẨM */}
+                
                 <div className="aspect-square relative bg-gray-50 overflow-hidden" onClick={handleCardClick}>
                     <img
                         src={getImageUrl(product.url || product.image)}
@@ -110,7 +110,7 @@ const ProductCard = ({ product }) => {
                         <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md">-{discountPercent}%</div>
                     )}
                     
-                    {/* Badge Thương hiệu góc phải (cho đẹp) */}
+                    
                     {brandName && (
                         <div className="absolute top-3 right-3 bg-white/90 backdrop-blur text-xs font-bold text-gray-700 px-2 py-1 rounded shadow-sm border border-gray-100 uppercase">
                             {brandName}
@@ -142,11 +142,11 @@ const ProductCard = ({ product }) => {
                     </div>
                 </div>
 
-                {/* THÔNG TIN */}
+               
                 <div className="p-4 flex flex-col flex-1" onClick={handleCardClick}>
                     
-                    {/* --- HIỂN THỊ THƯƠNG HIỆU & NHÀ SX --- */}
-                    {/* Style: Chữ nhỏ màu xám, viết hoa, nằm trên tên SP */}
+                    
+                    
                     <div className="text-xs text-gray-500 mb-1 font-semibold tracking-wide truncate">
                         {brandName ? <span className="text-indigo-600 uppercase">{brandName}</span> : <span>N/A</span>}
                         
@@ -154,7 +154,7 @@ const ProductCard = ({ product }) => {
                         
                         {manufactureName ? <span className="text-gray-600 uppercase">{manufactureName}</span> : <span>N/A</span>}
                     </div>
-                    {/* -------------------------------------- */}
+                    
 
                     <h3 className="text-sm font-medium text-gray-800 line-clamp-2 leading-snug hover:text-indigo-600 transition-colors mb-2 min-h-[40px]" title={name}>
                         {name}
