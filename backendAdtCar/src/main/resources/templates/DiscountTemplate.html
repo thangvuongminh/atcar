@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body style="font-family:Arial;background:#f5f5f5;padding:20px;">
+
+<div style="max-width:520px;margin:auto;background:#fff;padding:20px;border-radius:8px;
+            border:1px solid #e0e0e0;">
+
+    <h2 style="margin:0;color:#1976d2;" >TRUNG TÂM SỬA CHỮA MAINTAINCECAR</h2>
+
+    <p>Xin chào <strong th:text="${name}">Khách hàng</strong>,</p>
+
+    <p>
+        Chúng tôi gửi tặng bạn <strong th:text="${discountPercent}">20</strong>% giảm giá
+        cho dịch vụ:
+        <span th:text="${serviceDescription}">Sửa chữa thiết bị</span>.
+    </p>
+
+    <div style="padding:12px;border:1px dashed #1976d2;border-radius:6px;text-align:center;margin:12px 0;">
+        <div style="margin-top:4px;">Mã ưu đãi:</div>
+        <div style="font-size:16px;font-weight:bold;color:#1976d2;margin-top:4px;"
+             th:text="${code}">ABC123</div>
+        <div style="margin-top:6px;font-size:12px;color:#666;">
+            Hạn dùng đến: <span th:text="${expire}">31/12/2025</span>
+        </div>
+    </div>
+
+    <p style="font-size:13px;color:#555;margin-top:6px;">
+        🔸 **Số lượng mã ưu đãi có hạn**
+        🔸 **Chỉ áp dụng khi đặt lịch trước**
+    </p>
+
+    <p style="font-size:12px;color:#666;margin-top:16px;">
+        Liên hệ: <span>0123 456 789</span>
+        • Địa chỉ: <span>123 ABC, TP.HCM</span>
+    </p>
+
+</div>
+
+</body>
+</html>
