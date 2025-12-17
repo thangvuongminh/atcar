@@ -25,9 +25,7 @@ import {
 
 const BASE_IMG_URL = "http://localhost:8080/product/";
 
-// ==========================
-// HOOK DEBOUNCE (giống ProductsPage)
-// ==========================
+
 function useDebounce(value, delay) {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
@@ -39,9 +37,7 @@ function useDebounce(value, delay) {
   return debouncedValue;
 }
 
-// ==========================
-// COMPONENT PHÂN TRANG (giống ProductsPage)
-// ==========================
+
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const handlePageChange = (page) => {
     if (page < 1 || page > totalPages) return;
@@ -147,9 +143,7 @@ const ProductsAdmin = () => {
     deleteById,
   } = useAdminProductsStore();
 
-  // ==========================
-  // STATE PHÂN TRANG & FILTER
-  // ==========================
+
   const [currentPage, setCurrentPage] = useState(1); // 1-based cho UI
   const [pageSize, setPageSize] = useState(5);
 
@@ -165,7 +159,7 @@ const ProductsAdmin = () => {
 
   const [previewUrl, setPreviewUrl] = useState(null);
 
-  // Gộp tất cả filter vào một object rồi debounce => giống ProductsPage
+
   const filtersObject = useMemo(
     () => ({
       keyword: searchTerm,
@@ -191,9 +185,7 @@ const ProductsAdmin = () => {
 
   const debouncedFilters = useDebounce(filtersObject, 400);
 
-  // ==========================
-  // REACT-HOOK-FORM
-  // ==========================
+ 
   const {
     register,
     handleSubmit,
@@ -221,9 +213,7 @@ const ProductsAdmin = () => {
   const watchedPrice = watch("price");
   const watchedPriceFake = watch("priceFake");
 
-  // ==========================
-  // GỌI API GIỐNG ProductsPage (dựa trên params memo + debounce)
-  // ==========================
+
   const apiParams = useMemo(() => {
     const pageParam = Math.max(currentPage - 1, 0);
     const filters = [];
@@ -265,11 +255,9 @@ const ProductsAdmin = () => {
 
   useEffect(() => {
     fetchData(apiParams);
-  }, [apiParams]); // eslint-disable-line
+  }, [apiParams]); 
 
-  // ==========================
-  // Nút clear filter
-  // ==========================
+  
   const clearFilters = () => {
     setSearchTerm("");
     setFilterManufacture("");
@@ -282,9 +270,7 @@ const ProductsAdmin = () => {
     setCurrentPage(1);
   };
 
-  // ==========================
-  // FORM LOGIC
-  // ==========================
+  
   useEffect(() => {
     if (editingProduct) {
       reset({
@@ -334,7 +320,7 @@ const ProductsAdmin = () => {
         setCurrentPage(1);
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
-      // Gọi lại data với params hiện tại
+     
       fetchData(apiParams);
     } else toast.error(result.message);
   };
@@ -386,7 +372,7 @@ const ProductsAdmin = () => {
       <Toaster position="top-center" />
 
       <div className="w-full px-6 pt-6">
-        {/* HEADER */}
+      
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 bg-white p-4 rounded-xl shadow-sm border border-gray-200">
           <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
             <Box className="text-indigo-600" size={28} /> Quản Lý Sản Phẩm
@@ -394,7 +380,7 @@ const ProductsAdmin = () => {
         </div>
 
         <div className="grid grid-cols-12 gap-6 items-start">
-          {/* FORM BÊN TRÁI */}
+       
           <div className="col-span-12 xl:col-span-3 sticky top-6 z-10">
             <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
               <div
@@ -424,7 +410,7 @@ const ProductsAdmin = () => {
                 )}
               </div>
               <form onSubmit={handleSubmit(onSubmit)} className="p-5 space-y-4">
-                {/* Upload ảnh */}
+               
                 <div>
                   <div
                     className={`relative w-full h-48 rounded-lg border-2 border-dashed flex flex-col items-center justify-center overflow-hidden bg-gray-50 hover:bg-gray-100 transition-colors ${
@@ -463,7 +449,7 @@ const ProductsAdmin = () => {
                   )}
                 </div>
 
-                {/* Tên + trạng thái */}
+              
                 <div className="space-y-3">
                   <input
                     type="text"
@@ -486,7 +472,7 @@ const ProductsAdmin = () => {
                   </select>
                 </div>
 
-                {/* Giá */}
+          
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <input
@@ -507,7 +493,7 @@ const ProductsAdmin = () => {
                   />
                 </div>
 
-                {/* Kho, đã bán, đơn vị */}
+              
                 <div className="grid grid-cols-3 gap-2">
                   <input
                     type="number"
@@ -577,9 +563,9 @@ const ProductsAdmin = () => {
             </div>
           </div>
 
-          {/* CỘT PHẢI: FILTER + TABLE */}
+          
           <div className="col-span-12 xl:col-span-9 space-y-4">
-            {/* BỘ LỌC (ở trên, giống kiểu ProductsPage) */}
+         
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
               <div className="flex items-center justify-between mb-4 border-b border-gray-100 pb-2">
                 <div className="flex items-center gap-2 font-bold text-gray-700">
@@ -594,7 +580,7 @@ const ProductsAdmin = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {/* Tìm theo tên / mô tả */}
+              
                 <div className="col-span-1 md:col-span-2 lg:col-span-4">
                   <div className="relative">
                     <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
@@ -608,7 +594,7 @@ const ProductsAdmin = () => {
                   </div>
                 </div>
 
-                {/* Trạng thái */}
+         
                 <div>
                   <label className="text-xs font-semibold text-gray-500 mb-1 block">
                     Trạng thái
@@ -628,7 +614,7 @@ const ProductsAdmin = () => {
                   </select>
                 </div>
 
-                {/* Đã bán tối thiểu */}
+             
                 <div>
                   <label className="text-xs font-semibold text-gray-500 mb-1 block">
                     Đã bán tối thiểu
@@ -645,7 +631,7 @@ const ProductsAdmin = () => {
                   />
                 </div>
 
-                {/* Nhà sản xuất */}
+           
                 <div>
                   <label className="text-xs font-semibold text-gray-500 mb-1 block">
                     Nhà sản xuất
@@ -662,7 +648,6 @@ const ProductsAdmin = () => {
                   />
                 </div>
 
-                {/* Đơn vị tính */}
                 <div>
                   <label className="text-xs font-semibold text-gray-500 mb-1 block">
                     Đơn vị tính
@@ -679,7 +664,7 @@ const ProductsAdmin = () => {
                   />
                 </div>
 
-                {/* Tồn kho tối thiểu */}
+           
                 <div>
                   <label className="text-xs font-semibold text-gray-500 mb-1 block">
                     Tồn kho tối thiểu
@@ -696,7 +681,6 @@ const ProductsAdmin = () => {
                   />
                 </div>
 
-                {/* Khoảng giá */}
                 <div className="col-span-1 md:col-span-2 lg:col-span-3">
                   <label className="text-xs font-semibold text-gray-500 mb-1 block">
                     Khoảng giá
@@ -727,7 +711,7 @@ const ProductsAdmin = () => {
               </div>
             </div>
 
-            {/* BẢNG DỮ LIỆU + PHÂN TRANG GIỐNG ProductsPage */}
+       
             <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden flex flex-col min-h-[500px]">
               <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
                 <span className="font-bold text-gray-700 flex items-center gap-2">
@@ -875,7 +859,7 @@ const ProductsAdmin = () => {
                 </table>
               </div>
 
-              {/* PHÂN TRANG MỚI */}
+       
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages || 1}
