@@ -6,24 +6,24 @@ const axiosClient = axios.create({
     headers: { "Content-Type": "application/json" },
 });
 
-// =================== REQUEST INTERCEPTOR ===================
+
 axiosClient.interceptors.request.use(
     (config) => {
-        // 1. Lấy từ Store (Ưu tiên số 1)
+      
         let token = useAuthStore.getState().accessToken;
 
-        // 2. Nếu Store chưa kịp load, thử lấy trực tiếp từ LocalStorage (key trần)
+        
         if (!token) {
             token = localStorage.getItem("accessToken");
         }
 
-        // 3. (FIX LỖI 401) Nếu dùng Zustand Persist, token nằm trong cục JSON 'auth_v1'
+        
         if (!token) {
             try {
-                const persistedState = localStorage.getItem("auth_v1"); // Kiểm tra lại key này trong trình duyệt (F12 -> Application -> Local Storage)
+                const persistedState = localStorage.getItem("auth_v1"); 
                 if (persistedState) {
                     const parsed = JSON.parse(persistedState);
-                    // Lấy token từ cấu trúc state đã lưu
+                    
                     token =
                         parsed?.state?.accessToken ||
                         parsed?.state?.user?.token;
@@ -45,7 +45,7 @@ axiosClient.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
-// =================== RESPONSE INTERCEPTOR (Giữ nguyên logic Refresh) ===================
+
 axiosClient.interceptors.response.use(
     (response) => response,
     async (error) => {
@@ -55,7 +55,7 @@ axiosClient.interceptors.response.use(
 
         const status = error.response.status;
 
-        // Nếu lỗi 401 và chưa retry
+       
         if (status === 401 && !originalRequest._retry) {
             console.log(
                 "🔥 Token hết hạn hoặc không hợp lệ, đang thử Refresh..."
@@ -63,13 +63,13 @@ axiosClient.interceptors.response.use(
             originalRequest._retry = true;
 
             try {
-                // Lấy refresh token tương tự như logic trên
+               
                 let refreshToken =
                     useAuthStore.getState().refreshToken ||
                     localStorage.getItem("refreshToken");
 
                 if (!refreshToken) {
-                    // Thử lấy từ persist storage nếu ko thấy
+                
                     const persistedState = localStorage.getItem("auth_v1");
                     if (persistedState) {
                         const parsed = JSON.parse(persistedState);
@@ -81,7 +81,7 @@ axiosClient.interceptors.response.use(
                     throw new Error("Không tìm thấy refreshToken");
                 }
 
-                // Gọi API refresh
+                
                 const res = await axios.post("http://localhost:8080/refresh", {
                     refreshToken,
                 });
@@ -93,17 +93,14 @@ axiosClient.interceptors.response.use(
                         userResponse,
                     } = res.data.data;
 
-                    // Lưu lại token mới
+             
                     useAuthStore.getState().setAuth({
                         user: userResponse,
                         accessToken: newAccessToken,
                         refreshToken: newRefreshToken,
                     });
 
-                    // Cập nhật localStorage nếu cần (tùy logic app bạn)
-                    // localStorage.setItem("accessToken", newAccessToken);
-
-                    // Gắn token mới và gọi lại request cũ
+                   
                     axiosClient.defaults.headers.common[
                         "Authorization"
                     ] = `Bearer ${newAccessToken}`;
