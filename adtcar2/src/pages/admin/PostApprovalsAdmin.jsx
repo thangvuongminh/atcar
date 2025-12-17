@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAdminPostApprovalsStore } from "../../store/admin.postsApproval.store";
 import { X, Eye, Trash2, CheckCircle, XCircle, Clock, Archive, ImageOff } from "lucide-react"; 
 
-// 🟢 CẤU HÌNH BASE URL
+
 const IMAGE_BASE_URL = "http://localhost:8080/storage";
 
 export default function PostApprovalsAdmin() {
@@ -34,21 +34,19 @@ export default function PostApprovalsAdmin() {
       }
   }
 
-  // 🔴 FIX LẠI HÀM GET IMAGE: GHÉP THÊM TYPE VÀO URL
+ 
   const getImageUrl = (post) => {
-    // Kiểm tra xem post hoặc mảng ảnh có tồn tại không
+   
     if (!post || !post.urlImg || post.urlImg.length === 0) return null;
 
     const fileName = post.urlImg[0];
 
-    // Trường hợp 1: Nếu trong tên file đã có sẵn dấu '/' (vd: "discount/abc.png") thì dùng luôn
+  
     if (fileName.includes('/')) {
         return `${IMAGE_BASE_URL}/${fileName}`;
     }
 
-    // Trường hợp 2: Nếu chưa có, thì ghép: BASE_URL / TYPE / FILENAME
-    // Lưu ý: Đảm bảo object 'post' từ API trả về có field 'type' (vd: "discount", "marketing")
-    // Nếu API trả về field tên khác (vd: categorySlug, folderName) thì sửa 'post.type' bên dưới lại cho đúng.
+  
     const folder = post.type ? post.type.toLowerCase() : 'other'; 
     return `${IMAGE_BASE_URL}/${folder}/${fileName}`;
   };
@@ -65,7 +63,7 @@ export default function PostApprovalsAdmin() {
         </div>
       )}
 
-      {/* --- HEADER --- */}
+   
       <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
         <h1 className="text-2xl font-bold text-slate-800">Quản lý bài viết</h1>
         <div className="relative w-full md:w-auto">
@@ -79,7 +77,7 @@ export default function PostApprovalsAdmin() {
         </div>
       </div>
 
-      {/* --- TABS --- */}
+
       <div className="flex gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
         {["ALL", "PENDING_REVIEW", "PUBLISHED", "DENY", "ARCHIVED"].map(st => (
             <button 
@@ -96,7 +94,7 @@ export default function PostApprovalsAdmin() {
         ))}
       </div>
 
-      {/* --- DANH SÁCH --- */}
+ 
       {loading && posts.length === 0 ? (
         <div className="py-20 text-center text-slate-400">Đang tải dữ liệu...</div>
       ) : (
@@ -111,12 +109,12 @@ export default function PostApprovalsAdmin() {
                 <div className="p-10 text-center text-gray-400">Không tìm thấy bài viết nào.</div>
             ) : (
                 posts.map(p => {
-                    // Gọi hàm lấy URL đã sửa
+           
                     const imageUrl = getImageUrl(p);
 
                     return (
                     <div key={p.id} className="p-5 flex flex-col md:flex-row gap-6 hover:bg-slate-50 transition-colors group">
-                        {/* Ảnh Thumbnail */}
+         
                         <div className="w-full md:w-48 h-32 bg-gray-100 rounded-lg overflow-hidden shrink-0 border relative shadow-sm flex items-center justify-center">
                             {imageUrl ? (
                                 <img 
@@ -126,7 +124,7 @@ export default function PostApprovalsAdmin() {
                                     onError={(e) => {
                                         e.target.onerror = null; 
                                         e.target.src = "https://via.placeholder.com/300x200?text=Error+Loading";
-                                        // console.log("Lỗi tải ảnh:", imageUrl); // Debug nếu cần
+                               
                                     }}
                                 />
                             ) : (
@@ -141,14 +139,14 @@ export default function PostApprovalsAdmin() {
                             </div>
                         </div>
 
-                        {/* Nội dung */}
+                 
                         <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-2">
                                 <span className={`px-2 py-1 text-[10px] font-extrabold border rounded uppercase ${getStatusColor(p.postStatus)}`}>
                                     {p.postStatus}
                                 </span>
                                 <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded border border-indigo-100">{p.categoryName}</span>
-                                {/* Hiển thị Type ra để check xem có đúng discount/marketing không */}
+                         
                                 {p.type && <span className="text-[10px] text-gray-400 border border-gray-200 px-1 rounded bg-gray-50">{p.type}</span>}
                             </div>
                             <h3 className="font-bold text-lg text-slate-800 mb-1 line-clamp-1 cursor-pointer hover:text-indigo-600 transition" onClick={() => setSelectedPost(p)}>
@@ -161,7 +159,7 @@ export default function PostApprovalsAdmin() {
                             </div>
                         </div>
 
-                        {/* --- CỘT NÚT THAO TÁC --- */}
+                  
                         <div className="flex flex-col gap-2 w-full md:w-44 shrink-0 border-t md:border-t-0 md:border-l border-gray-100 md:pl-6 pt-4 md:pt-0">
                             <span className="text-[10px] font-bold text-gray-300 uppercase text-center hidden md:block mb-1">Thao tác</span>
                             
@@ -207,7 +205,6 @@ export default function PostApprovalsAdmin() {
         </div>
       )}
 
-      {/* --- PHÂN TRANG --- */}
       {posts.length > 0 && (
         <div className="flex justify-center items-center gap-4 mt-8">
             <button disabled={page === 0} onClick={() => setPage(page - 1)} className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm">&larr; Trước</button>
@@ -216,7 +213,6 @@ export default function PostApprovalsAdmin() {
         </div>
       )}
 
-      {/* --- MODAL --- */}
       {selectedPost && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
             <div className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden animate-scale-up max-h-[90vh] flex flex-col">
