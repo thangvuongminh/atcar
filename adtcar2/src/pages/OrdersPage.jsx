@@ -21,11 +21,11 @@ const OrdersPage = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // State cho Thanh toán (MoMo)
+  
   const [paymentUrl, setPaymentUrl] = useState("");
   const [isQrLoading, setIsQrLoading] = useState(false);
 
-  // State Đếm ngược
+
   const [timeLeft, setTimeLeft] = useState(0);
   const [isExpired, setIsExpired] = useState(false);
 
@@ -40,7 +40,7 @@ const OrdersPage = () => {
     }
   }, [location]);
 
-  // Logic: Khi mở đơn hàng Pending -> Tự động gọi API lấy QR MoMo
+ 
   useEffect(() => {
     if (selectedOrder && selectedOrder.orderStatus === "PENDING_PAYMENT") {
       const createdTime = parseDate(selectedOrder.create_At);
@@ -62,7 +62,7 @@ const OrdersPage = () => {
     }
   }, [selectedOrder]);
 
-  // Logic: Đếm ngược
+  
   useEffect(() => {
     let timer;
     if (
@@ -90,7 +90,7 @@ const OrdersPage = () => {
     return () => clearInterval(timer);
   }, [selectedOrder, isExpired]);
 
-  // API lấy QR
+
   const fetchMomoQR = async (order) => {
     setIsQrLoading(true);
     try {
@@ -173,14 +173,14 @@ const OrdersPage = () => {
       </div>
     );
 
-  // ===================== VIEW CHI TIẾT ĐƠN HÀNG =====================
+  
   if (selectedOrder) {
     const products = getProductList(selectedOrder);
 
     return (
       <div className="min-h-screen bg-gray-100 py-8 px-4 font-sans">
         <div className="max-w-7xl mx-auto">
-          {/* Back Button */}
+        
           <button
             onClick={() => setSelectedOrder(null)}
             className="flex items-center text-gray-500 hover:text-gray-800 mb-6 transition-colors font-medium"
@@ -189,9 +189,9 @@ const OrdersPage = () => {
           </button>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* --- CỘT TRÁI (8/12): THÔNG TIN & SẢN PHẨM --- */}
+          
             <div className="lg:col-span-8 space-y-6">
-              {/* Card 1: Header */}
+            
               <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
                 <div className="flex justify-between items-start">
                   <div>
@@ -219,7 +219,7 @@ const OrdersPage = () => {
                 </div>
               </div>
 
-              {/* Card 2: Danh sách sản phẩm */}
+             
               <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
                 <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50">
                   <h3 className="font-bold text-gray-700 flex items-center gap-2">
@@ -265,7 +265,7 @@ const OrdersPage = () => {
                   })}
                 </div>
 
-                {/* Tổng tiền Footer */}
+            
                 <div className="bg-gray-50 p-6 flex flex-col items-end gap-2 border-t border-gray-100">
                   <div className="flex justify-between w-full max-w-xs text-gray-500 text-sm">
                     <span>Tạm tính</span>
@@ -294,9 +294,9 @@ const OrdersPage = () => {
               </div>
             </div>
 
-            {/* --- CỘT PHẢI (4/12): TRẠNG THÁI THANH TOÁN --- */}
+            
             <div className="lg:col-span-4">
-              {/* LOGIC HIỂN THỊ TRẠNG THÁI */}
+           
               {selectedOrder.orderStatus === "PENDING_PAYMENT" ? (
                 <div className="sticky top-6 space-y-4">
                   <div
@@ -312,11 +312,11 @@ const OrdersPage = () => {
                     </div>
 
                     <div className="p-8 flex flex-col items-center bg-white">
-                      {/* LOGIC QR / EXPIRED */}
+               
                       <div className="relative group">
                         <div className="relative bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
                           {isExpired ? (
-                            // TRƯỜNG HỢP 1: PENDING NHƯNG HẾT GIỜ -> FAIL
+                       
                             <div className="w-48 h-48 flex flex-col items-center justify-center text-red-500">
                               <XCircle size={40} className="mb-2" />
                               <span className="font-bold text-xs">
@@ -350,7 +350,7 @@ const OrdersPage = () => {
                         </div>
                       </div>
 
-                      {/* Timer Countdown (Chỉ hiện khi chưa hết hạn) */}
+                
                       {!isExpired && (
                         <div className="mt-8 w-full">
                           <div className="flex justify-between text-xs text-gray-500 mb-2 uppercase font-bold tracking-wider">
@@ -369,7 +369,7 @@ const OrdersPage = () => {
                         </div>
                       )}
 
-                      {/* Nút thao tác khi hết hạn */}
+                
                       {isExpired && (
                         <div className="mt-6 text-center">
                           <p className="text-red-600 font-bold mb-2">
@@ -387,7 +387,7 @@ const OrdersPage = () => {
                   </div>
                 </div>
               ) : selectedOrder.orderStatus === "CANCELLED" ? (
-                // TRƯỜNG HỢP 2: ĐƠN ĐÃ HỦY
+            
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-red-100 sticky top-6">
                   <div className="flex flex-col items-center text-center">
                     <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-4">
@@ -408,7 +408,7 @@ const OrdersPage = () => {
                   </div>
                 </div>
               ) : (
-                // TRƯỜNG HỢP 3: THÀNH CÔNG (Mặc định cho các trạng thái còn lại)
+          
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-green-100 sticky top-6">
                   <div className="flex flex-col items-center text-center">
                     <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-4">
@@ -436,7 +436,7 @@ const OrdersPage = () => {
     );
   }
 
-  // ===================== VIEW DANH SÁCH ĐƠN HÀNG =====================
+
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4 font-sans">
       <div className="max-w-5xl mx-auto">
