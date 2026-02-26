@@ -99,9 +99,6 @@ public class UserController {
     }
     @PostMapping("user/booking")
     public ResponseEntity<ApiResponse<?>> handleBookingCalendar(@RequestBody BookingRequest req) {
-
-        // --- LOGIC CHECK TRÙNG TẠI CONTROLLER ---
-        // Kiểm tra xem SĐT này, ngày này đã có đơn nào chưa (trừ đơn đã hủy)
         boolean isDuplicate = bookingRepository.existsByPhoneAndTimeBookingAndStatusNot(
                 req.getPhone(),
                 req.getTimeBooking(),
@@ -109,15 +106,12 @@ public class UserController {
         );
 
         if (isDuplicate) {
-            // Nếu trùng -> Trả về lỗi 400 Bad Request ngay lập tức
             return ResponseEntity.badRequest().body(ApiResponse.builder()
                     .statusCode(400)
                     .message("Bạn đã có lịch hẹn trong ngày này rồi, vui lòng chọn ngày khác!")
                     .data(null)
                     .build());
         }
-        // ----------------------------------------
-
         userService.handleBookingCalendar(req);
 
         return ResponseEntity.ok(ApiResponse.<MomoResponse>builder()
